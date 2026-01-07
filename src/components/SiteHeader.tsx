@@ -66,7 +66,7 @@ export function SiteHeader() {
             alt="Makola Marketplace"
             width={120}
             height={120}
-            className="h-16 w-auto sm:h-16 md:h-20"
+            className="h-20 w-auto sm:h-16 md:h-20"
             priority
           />
           <span className="sr-only">Makola Marketplace</span>

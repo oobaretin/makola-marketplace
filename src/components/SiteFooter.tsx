@@ -14,7 +14,7 @@ export function SiteFooter() {
                 alt="Makola Marketplace"
                 width={140}
                 height={140}
-                className="h-20 w-auto"
+                className="h-16 w-auto sm:h-16"
               />
               <span className="sr-only">{STORE_INFO.name}</span>
             </div>
