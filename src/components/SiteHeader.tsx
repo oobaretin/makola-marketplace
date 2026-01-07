@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/Button";
 import { useShoppingList } from "@/lib/shopping-list";
 
@@ -15,6 +15,8 @@ export function SiteHeader() {
     [state.items],
   );
   const [mobileOpen, setMobileOpen] = useState(false);
+  const headerRef = useRef<HTMLElement | null>(null);
+  const [mobileMenuTop, setMobileMenuTop] = useState(72);
 
   useEffect(() => {
     // Close mobile menu on navigation.
@@ -39,8 +41,24 @@ export function SiteHeader() {
     };
   }, [mobileOpen]);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+    function updateTop() {
+      const h = headerRef.current?.getBoundingClientRect().height;
+      if (typeof h === "number" && Number.isFinite(h) && h > 0) {
+        setMobileMenuTop(Math.ceil(h));
+      }
+    }
+    updateTop();
+    window.addEventListener("resize", updateTop);
+    return () => window.removeEventListener("resize", updateTop);
+  }, [mobileOpen]);
+
   return (
-    <header className="sticky top-0 z-40 border-b border-zinc-200/70 bg-white/90 backdrop-blur">
+    <header
+      ref={headerRef}
+      className="sticky top-0 z-40 border-b border-zinc-200/70 bg-white/90 backdrop-blur"
+    >
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:py-4">
         <Link href="/" className="flex items-center">
           <Image
@@ -48,7 +66,7 @@ export function SiteHeader() {
             alt="Makola Marketplace"
             width={120}
             height={120}
-            className="h-14 w-auto sm:h-16 md:h-20"
+            className="h-16 w-auto sm:h-16 md:h-20"
             priority
           />
           <span className="sr-only">Makola Marketplace</span>
@@ -109,7 +127,10 @@ export function SiteHeader() {
             aria-label="Close menu"
             onClick={() => setMobileOpen(false)}
           />
-          <div className="fixed inset-x-0 top-[72px] z-50 mx-auto w-full max-w-6xl px-4">
+          <div
+            className="fixed inset-x-0 z-50 mx-auto w-full max-w-6xl px-4"
+            style={{ top: mobileMenuTop }}
+          >
             <div
               id="mobile-nav"
               className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-lg"
