@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fafafa;
+  --foreground: #171717;
+
+  /* Brand accents (vibrant/marketplace). */
+  --brand-emerald: #059669;
+  --brand-amber: #f59e0b;
+  --brand-rose: #e11d48;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-brand: var(--brand-emerald);
+  --color-brand-warm: var(--brand-amber);
+  --color-brand-danger: var(--brand-rose);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, Segoe UI, Roboto,
+    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Make focus more visible globally (components can still override). */
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: none;
+}
+
+/* Consistent link treatment for "marketplace" feel. */
+.link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: color-mix(in oklab, var(--brand-amber) 55%, transparent);
+}
+.link:hover {
+  text-decoration-color: var(--brand-amber);
+}
+
+::selection {
+  background: rgba(234, 179, 8, 0.35);
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media print {
+  header,
+  footer {
+    display: none !important;
+  }
+  main {
+    padding: 0 !important;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+}
