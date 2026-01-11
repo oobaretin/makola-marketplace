@@ -80,14 +80,9 @@ function ProductTile({ name }: { name: string }) {
           <Stars rating={0} />
           <span>No reviews</span>
         </div>
-
-        <div className="flex items-center justify-center gap-2 text-xs text-zinc-500">
-          <span aria-hidden="true" className="inline-block h-2 w-2 rounded-full border border-zinc-300" />
-          <span>Choose a store to see availability</span>
-        </div>
       </div>
 
-      <div className="border-t border-zinc-200/80 bg-zinc-50/70 p-4">
+      <div className="border-t border-zinc-200/80 bg-white p-4">
         <AddToListButton name={name} className="w-full justify-center" size="md" />
       </div>
     </div>
