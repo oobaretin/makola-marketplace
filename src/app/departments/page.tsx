@@ -42,34 +42,53 @@ export default function DepartmentsPage() {
 
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               {d.starterItems.map((name) => (
-                <div
-                  key={name}
-                  className="group overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
-                >
-                  <div
-                    className="aspect-[4/3] w-full"
-                    aria-hidden="true"
-                    title="Image placeholder"
-                    style={{
-                      background: placeholderGradient(name),
-                    }}
-                  />
-                  <div className="p-4">
-                    <div className="min-w-0">
-                      <div className="line-clamp-2 text-sm font-semibold text-zinc-950">
-                        {name}
-                      </div>
-                      <div className="mt-1 text-xs text-zinc-500">
-                        Price coming soon • In-store only
-                      </div>
-                    </div>
-                    <AddToListButton name={name} className="mt-4 w-full justify-center" />
-                  </div>
-                </div>
+                <ProductTile key={name} name={name} />
               ))}
             </div>
           </section>
         ))}
+      </div>
+    </div>
+  );
+}
+
+function ProductTile({ name }: { name: string }) {
+  return (
+    <div className="group overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+      <div
+        className="flex aspect-square w-full items-center justify-center bg-white p-8"
+        aria-hidden="true"
+        title="Image placeholder"
+        style={{
+          background: placeholderGradient(name),
+        }}
+      >
+        <div className="h-full w-full rounded-2xl bg-white/75 shadow-[inset_0_0_0_1px_rgba(24,24,27,0.06)]" />
+      </div>
+
+      <div className="space-y-3 px-5 pb-5 pt-4">
+        <div className="text-center text-sm font-semibold text-zinc-950">
+          <span className="text-zinc-950">$—</span>{" "}
+          <span className="font-medium text-zinc-500">USD</span>
+        </div>
+
+        <div className="text-center text-lg font-semibold leading-snug text-zinc-950">
+          {name}
+        </div>
+
+        <div className="flex items-center justify-center gap-3 text-xs text-zinc-500">
+          <Stars rating={0} />
+          <span>No reviews</span>
+        </div>
+
+        <div className="flex items-center justify-center gap-2 text-xs text-zinc-500">
+          <span aria-hidden="true" className="inline-block h-2 w-2 rounded-full border border-zinc-300" />
+          <span>Choose a store to see availability</span>
+        </div>
+      </div>
+
+      <div className="border-t border-zinc-200/80 bg-zinc-50/70 p-4">
+        <AddToListButton name={name} className="w-full justify-center" size="md" />
       </div>
     </div>
   );
@@ -97,6 +116,38 @@ function stableHash(input: string): number {
     h = Math.imul(h, 16777619);
   }
   return Math.abs(h);
+}
+
+function Stars({ rating }: { rating: number }) {
+  const r = Math.max(0, Math.min(5, Math.round(rating)));
+  return (
+    <div className="flex items-center gap-1" aria-label={`${r} out of 5 stars`}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star key={i} filled={i < r} />
+      ))}
+    </div>
+  );
+}
+
+function Star({ filled }: { filled: boolean }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill={filled ? "currentColor" : "none"}
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      className={filled ? "text-zinc-900" : "text-zinc-300"}
+    >
+      <path
+        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
 }
 
 

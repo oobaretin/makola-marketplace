@@ -20,6 +20,7 @@ export function SiteHeader() {
 
   useEffect(() => {
     // Close mobile menu on navigation.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMobileOpen(false);
   }, [pathname]);
 
