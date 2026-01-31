@@ -25,6 +25,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "Just moved to Houston? Here’s where to get fresh Ugu, bitter leaf, Puna yam, and other West African staples—plus how to build your list before you go.",
     publishedAt: "2026-01-08",
     readTimeMinutes: 5,
+    coverImageSrc: "/AF9231CE-E67A-408D-BE83-0F6AAE4253EE_1_105_c.jpeg",
     coverHint: "West African ingredients Houston",
     content: [
       {
