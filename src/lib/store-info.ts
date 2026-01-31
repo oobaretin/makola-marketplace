@@ -2,6 +2,9 @@ export const STORE_INFO = {
   name: "Makola Marketplace",
   addressLine1: "9051 W Bellfort Ave",
   addressLine2: "Houston, TX 77031",
+  /** Landmark for Houston drivers: Brays Oaks, W Bellfort & S Gessner. */
+  locationLandmark:
+    "Located in the Brays Oaks District, near the corner of W Bellfort and S Gessner.",
   phoneDisplay: "713-995-4343",
   phoneHref: "tel:+17139954343",
   /** Google Maps URL for "On the Road" (Navigator) — open directions & hours. */

@@ -88,6 +88,9 @@ export default function ContactPage() {
                 <br />
                 {STORE_INFO.addressLine2}
               </p>
+              <p className="mt-2 text-sm text-stone-500">
+                {STORE_INFO.locationLandmark}
+              </p>
               <div className="mt-3 flex flex-wrap gap-3">
                 <a
                   href={STORE_INFO.mapsUrl}

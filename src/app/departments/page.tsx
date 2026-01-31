@@ -13,7 +13,7 @@ import {
 import { isKitchenOpen } from "@/lib/data/kitchen";
 import { useShoppingList } from "@/lib/shopping-list";
 
-const CHIP_IDS = ["all", "produce", "pantry", "meat", "flour", "drinks", "snacks", "kitchen"] as const;
+const CHIP_IDS = ["all", "produce", "pantry", "meat", "flour", "drinks", "snacks", "beauty", "kitchen"] as const;
 
 function DepartmentsContent() {
   const searchParams = useSearchParams();

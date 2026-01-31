@@ -152,6 +152,7 @@ export default function HomePage() {
             <p className="text-sm font-medium text-stone-700">
               {STORE_INFO.addressLine1}, {STORE_INFO.addressLine2}
             </p>
+            <p className="mt-1 text-xs text-stone-500">{STORE_INFO.locationLandmark}</p>
             <p className="mt-2 text-sm text-stone-600">
               <a className="link font-medium text-stone-900" href={STORE_INFO.phoneHref}>
                 {STORE_INFO.phoneDisplay}

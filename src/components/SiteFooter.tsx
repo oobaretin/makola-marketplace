@@ -61,6 +61,9 @@ export function SiteFooter() {
                 <br />
                 {STORE_INFO.addressLine2}
               </div>
+              <p className="text-xs text-stone-500">
+                {STORE_INFO.locationLandmark}
+              </p>
               <a
                 className="text-sm font-medium text-stone-900 underline decoration-stone-300 underline-offset-4 hover:decoration-stone-900"
                 href={STORE_INFO.phoneHref}
