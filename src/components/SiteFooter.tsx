@@ -109,6 +109,9 @@ export function SiteFooter() {
               <Link className="text-stone-700 hover:text-stone-950" href="/blog">
                 Blog
               </Link>
+              <Link className="text-stone-700 hover:text-stone-950" href="/about">
+                About
+              </Link>
               <Link className="text-stone-700 hover:text-stone-950" href="/shopping-list">
                 Shopping List
               </Link>
