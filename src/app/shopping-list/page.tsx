@@ -6,6 +6,7 @@ import { Button } from "@/components/Button";
 import { ListExportButtons } from "@/components/ListExportButtons";
 import { QuickAddForm } from "@/components/QuickAddForm";
 import { STORE_INFO } from "@/lib/store-info";
+import { formatListForWhatsApp } from "@/lib/shopping-list/formatForWhatsApp";
 import { useShoppingList } from "@/lib/shopping-list";
 import type { ShoppingListItem } from "@/lib/shopping-list/types";
 import {
@@ -56,6 +57,14 @@ function TrashIcon({ className }: { className?: string }) {
         strokeLinejoin="round"
         d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
       />
+    </svg>
+  );
+}
+
+function WhatsAppIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.27 9.27 0 01-4.703-1.277l-.337-.201-3.496.917.933-3.405-.22-.35a9.271 9.271 0 01-1.422-4.91c0-5.113 4.158-9.27 9.274-9.27 2.479 0 4.808.965 6.556 2.714 1.748 1.748 2.712 4.077 2.712 6.556 0 5.115-4.158 9.27-9.274 9.27" />
     </svg>
   );
 }
@@ -119,6 +128,22 @@ export default function ShoppingListPage() {
               Ask on WhatsApp
             </a>
           </p>
+          <button
+            type="button"
+            onClick={() => {
+              if (state.items.length === 0) {
+                alert("Add items to your list first!");
+                return;
+              }
+              const message = formatListForWhatsApp(state.items);
+              const encoded = encodeURIComponent(message);
+              window.open(`https://wa.me/?text=${encoded}`, "_blank", "noopener,noreferrer");
+            }}
+            className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#25D366] py-4 font-bold text-white shadow-lg transition hover:bg-[#20ba5a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2"
+          >
+            <WhatsAppIcon className="h-6 w-6 shrink-0 fill-current" />
+            Share List via WhatsApp
+          </button>
         </div>
 
         {state.items.length === 0 ? (

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/Button";
 import { STORE_INFO } from "@/lib/store-info";
 import type { ShoppingListItem } from "@/lib/shopping-list/types";
+import { formatListForWhatsApp } from "@/lib/shopping-list/formatForWhatsApp";
 
 function formatListAsText(items: ShoppingListItem[]): string {
   const lines = items.map(
@@ -51,6 +52,12 @@ export function ListExportButtons({
     await handleCopy();
   };
 
+  const handleShareWhatsApp = () => {
+    const text = formatListForWhatsApp(items);
+    const encoded = encodeURIComponent(text);
+    window.open(`https://wa.me/?text=${encoded}`, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <div className="flex flex-wrap items-center gap-2">
       <Button
@@ -77,6 +84,14 @@ export function ListExportButtons({
         disabled={disabled}
       >
         Share / SMS
+      </Button>
+      <Button
+        type="button"
+        variant="ghost"
+        onClick={handleShareWhatsApp}
+        disabled={disabled}
+      >
+        WhatsApp
       </Button>
     </div>
   );

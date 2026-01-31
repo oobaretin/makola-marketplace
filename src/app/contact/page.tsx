@@ -88,14 +88,24 @@ export default function ContactPage() {
                 <br />
                 {STORE_INFO.addressLine2}
               </p>
-              <a
-                href={STORE_INFO.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 inline-block font-bold text-[var(--forest)] hover:underline"
-              >
-                Get Directions →
-              </a>
+              <div className="mt-3 flex flex-wrap gap-3">
+                <a
+                  href={STORE_INFO.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block font-bold text-[var(--forest)] hover:underline"
+                >
+                  Get Directions →
+                </a>
+                <a
+                  href={STORE_INFO.mapsDirectionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block font-bold text-amber-700 hover:underline"
+                >
+                  Check Traffic to Store
+                </a>
+              </div>
             </div>
           </section>
 

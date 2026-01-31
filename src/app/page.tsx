@@ -3,6 +3,7 @@ import { ArrivedTodayBanner } from "@/components/ArrivedTodayBanner";
 import { Button } from "@/components/Button";
 import { BlogCard } from "@/components/BlogCard";
 import DailySpecial from "@/components/DailySpecial";
+import HowItWorks from "@/components/HowItWorks";
 import { getBlogPosts } from "@/lib/blog";
 import { categories } from "@/lib/data/products";
 import { STORE_INFO } from "@/lib/store-info";
@@ -33,6 +34,9 @@ export default function HomePage() {
         <p className="mx-auto mt-4 max-w-xl text-lg text-stone-600">
           Plan your trip, save your time. Build your list, then shop in-store.
         </p>
+        <p className="mx-auto mt-2 text-sm font-medium text-stone-500">
+          In-store only — no delivery. No checkout on this site.
+        </p>
 
         {/* Action Hub */}
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -44,6 +48,9 @@ export default function HomePage() {
           </Button>
         </div>
       </section>
+
+      {/* How it Works — no-delivery model */}
+      <HowItWorks />
 
       {/* Hungry Shopper – Kitchen callout */}
       <div className="my-6 border-l-4 border-red-600 bg-red-50 p-4">
