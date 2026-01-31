@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrivedTodayBanner } from "@/components/ArrivedTodayBanner";
 import { Button } from "@/components/Button";
 import { BlogCard } from "@/components/BlogCard";
+import DailySpecial from "@/components/DailySpecial";
 import { getBlogPosts } from "@/lib/blog";
 import { categories } from "@/lib/data/products";
 import { STORE_INFO } from "@/lib/store-info";
@@ -61,6 +62,9 @@ export default function HomePage() {
           </Link>
         </div>
       </div>
+
+      {/* Today's rotating kitchen special */}
+      <DailySpecial />
 
       {/* The Essentials – 6-item grid */}
       <section className="py-8">

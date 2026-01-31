@@ -67,6 +67,14 @@ export const products: Product[] = [
   { id: "k2", name: "Egusi Soup with Pounded Yam", category: "kitchen", unit: "Hot Meal" },
   { id: "k3", name: "Waakye (Rice & Beans)", category: "kitchen", unit: "Hot Meal" },
   { id: "k4", name: "Meat Pie / Fish Pie", category: "kitchen", unit: "Snack" },
+  // DAILY SPECIALS (k5 = Sun … k11 = Sat) — used by DailySpecial component
+  { id: "k5", name: "Special Sunday Omotuo (Rice Balls)", category: "kitchen", unit: "Hot Meal" },
+  { id: "k6", name: "Jollof Rice & Grilled Chicken", category: "kitchen", unit: "Hot Meal" },
+  { id: "k7", name: "Assorted Meat Stew & White Rice", category: "kitchen", unit: "Hot Meal" },
+  { id: "k8", name: "Waakye Special", category: "kitchen", unit: "Hot Meal" },
+  { id: "k9", name: "Egusi Soup & Pounded Yam", category: "kitchen", unit: "Hot Meal" },
+  { id: "k10", name: "Fresh Tilapia & Banku", category: "kitchen", unit: "Hot Meal" },
+  { id: "k11", name: "Efo Riro (Vegetable Soup)", category: "kitchen", unit: "Hot Meal" },
 ];
 
 export function getProductsByCategory(categoryId: string): Product[] {

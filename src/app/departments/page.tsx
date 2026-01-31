@@ -6,11 +6,11 @@ import Link from "next/link";
 import { Button } from "@/components/Button";
 import {
   categories,
-  products,
   getProductsByCategory,
   searchProducts,
   type Product,
 } from "@/lib/data/products";
+import { isKitchenOpen } from "@/lib/data/kitchen";
 import { useShoppingList } from "@/lib/shopping-list";
 
 const CHIP_IDS = ["all", "produce", "pantry", "meat", "flour", "drinks", "snacks", "kitchen"] as const;
@@ -129,26 +129,35 @@ function DepartmentsContent() {
 function ProductCard({ product }: { product: Product }) {
   const { addProduct, isInList } = useShoppingList();
   const added = isInList(product.id);
+  const isKitchen = product.category === "kitchen";
+  const kitchenClosed = isKitchen && !isKitchenOpen();
 
   return (
-    <li className="flex items-center justify-between gap-4 border-b border-stone-200 bg-white p-4 last:border-b-0">
-      <div className="min-w-0 flex-1">
-        <h3 className="font-bold text-stone-800">{product.name}</h3>
-        <p className="text-sm text-stone-500">{product.unit}</p>
+    <li className="flex flex-col gap-1 border-b border-stone-200 bg-white p-4 last:border-b-0">
+      <div className="flex min-w-0 flex-1 items-center justify-between gap-4">
+        <div className="min-w-0 flex-1">
+          <h3 className="font-bold text-stone-800">{product.name}</h3>
+          <p className="text-sm text-stone-500">{product.unit}</p>
+        </div>
+        <button
+          type="button"
+          onClick={() => addProduct(product)}
+          disabled={added}
+          className={[
+            "shrink-0 rounded-full px-4 py-2 font-bold transition active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]/70 focus-visible:ring-offset-2",
+            added
+              ? "cursor-default bg-stone-100 text-stone-400"
+              : "bg-[var(--forest)] text-white hover:bg-[var(--forest-light)]",
+          ].join(" ")}
+        >
+          {added ? "Added" : "+ Add"}
+        </button>
       </div>
-      <button
-        type="button"
-        onClick={() => addProduct(product)}
-        disabled={added}
-        className={[
-          "shrink-0 rounded-full px-4 py-2 font-bold transition active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]/70 focus-visible:ring-offset-2",
-          added
-            ? "bg-stone-100 text-stone-400 cursor-default"
-            : "bg-[var(--forest)] text-white hover:bg-[var(--forest-light)]",
-        ].join(" ")}
-      >
-        {added ? "Added" : "+ Add"}
-      </button>
+      {kitchenClosed && (
+        <p className="text-xs text-amber-700">
+          Kitchen opens at 11:00 AM — Add to list now to pick up later!
+        </p>
+      )}
     </li>
   );
 }
