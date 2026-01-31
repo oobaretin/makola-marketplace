@@ -67,6 +67,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "Every ingredient you need for Jollof rice—Jasmine rice, tomato paste, Scotch bonnets, palm oil, and more. Add the full list to your Makola list in one tap.",
     publishedAt: "2026-01-08",
     readTimeMinutes: 4,
+    coverImageSrc: "/blog-jollof-shopping-list.png",
     coverHint: "Jollof rice shopping list",
     content: [
       {
