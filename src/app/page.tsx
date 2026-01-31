@@ -44,6 +44,24 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Hungry Shopper – Kitchen callout */}
+      <div className="my-6 border-l-4 border-red-600 bg-red-50 p-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="font-bold text-red-900">Hungry while you shop?</h3>
+            <p className="text-sm text-red-700">
+              Our kitchen is serving fresh Jollof, Suya, and Soup today.
+            </p>
+          </div>
+          <Link
+            href="/blog/makola-kitchen-food-to-go"
+            className="shrink-0 rounded-lg bg-red-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2"
+          >
+            View Menu
+          </Link>
+        </div>
+      </div>
+
       {/* The Essentials – 6-item grid */}
       <section className="py-8">
         <h2 className="text-xl font-semibold text-stone-950 sm:text-2xl">

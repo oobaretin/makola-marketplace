@@ -24,6 +24,10 @@ export const metadata: Metadata = {
     "Find fresh Yams, Plantains, Palm Oil, and authentic West African staples in Houston. Build your shopping list online and shop in-store at 9051 W Bellfort Ave.",
   keywords: [
     "African grocery Houston",
+    "Makola Kitchen",
+    "African takeout Houston",
+    "hot jollof rice Houston",
+    "Egusi soup to go",
     "Nigerian food Houston",
     "Ghanaian market Houston",
     "fufu",

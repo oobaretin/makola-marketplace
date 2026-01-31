@@ -133,6 +133,21 @@ export const BLOG_POSTS: BlogPost[] = [
           "Pro move: plan your grocery list around the proteins/sides you enjoy most",
         ],
       },
+      { type: "h2", text: "What time is food ready?" },
+      {
+        type: "p",
+        text: "Fresh batches of Jollof are ready by 11:30 AM daily. Other hot items (soups, waakye, etc.) are prepared in small batches throughout the day. If you’re coming for a specific dish, call ahead or ask at the counter—we’ll let you know what’s ready or when the next batch is up.",
+      },
+      { type: "h2", text: "Is it spicy?" },
+      {
+        type: "p",
+        text: "We get this a lot. Here’s a quick guide: Jollof and most rice dishes are medium—we can go lighter or hotter if you ask. Egusi and other soups can be adjusted; tell the kitchen “mild,” “medium,” or “spicy” and we’ll portion the pepper accordingly. Meat pie and fish pie are not spicy. When in doubt, ask for a taste or “small pepper” and add more at home if you like.",
+      },
+      { type: "h2", text: "Can I order for parties?" },
+      {
+        type: "p",
+        text: "Yes. We do catering pans and trays for events—Jollof, waakye, soups, and more. Order in advance (at least 24–48 hours for large orders) so we can prepare fresh. Call the store or ask at the kitchen counter for sizes, pricing, and pickup times.",
+      },
       { type: "h2", text: "How to order without slowing down your store run" },
       {
         type: "p",

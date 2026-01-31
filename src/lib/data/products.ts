@@ -22,6 +22,7 @@ export const categories: Category[] = [
   { id: "flour", name: "Flours & Swallows", icon: "🫓" },
   { id: "drinks", name: "Drinks", icon: "🥤" },
   { id: "snacks", name: "Snacks", icon: "🍿" },
+  { id: "kitchen", name: "Kitchen Menu", icon: "🍲" },
 ];
 
 export const products: Product[] = [
@@ -60,6 +61,12 @@ export const products: Product[] = [
   { id: "d1", name: "Malta Guinness / Supermalt", category: "drinks", unit: "6-pack" },
   { id: "d2", name: "Plantain Chips (Spicy)", category: "snacks", unit: "bag" },
   { id: "d3", name: "Ghana Fresh Palm Drink", category: "drinks", unit: "bottle" },
+
+  // KITCHEN MENU (Food To Go)
+  { id: "k1", name: "Jollof Rice & Chicken (Plate)", category: "kitchen", unit: "Hot Meal" },
+  { id: "k2", name: "Egusi Soup with Pounded Yam", category: "kitchen", unit: "Hot Meal" },
+  { id: "k3", name: "Waakye (Rice & Beans)", category: "kitchen", unit: "Hot Meal" },
+  { id: "k4", name: "Meat Pie / Fish Pie", category: "kitchen", unit: "Snack" },
 ];
 
 export function getProductsByCategory(categoryId: string): Product[] {
@@ -88,4 +95,5 @@ export const CATEGORY_ORDER: string[] = [
   "flour",
   "snacks",
   "drinks",
+  "kitchen",
 ];
