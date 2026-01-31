@@ -62,9 +62,9 @@ export function SiteHeader() {
           <Image
             src="/Bold.png"
             alt=""
-            width={96}
-            height={96}
-            className="h-12 w-auto sm:h-14"
+            width={120}
+            height={120}
+            className="h-14 w-auto sm:h-20"
             priority
           />
         </Link>
