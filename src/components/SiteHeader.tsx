@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Button } from "@/components/Button";
 import { useShoppingList } from "@/lib/shopping-list";
 
 export function SiteHeader() {
@@ -19,8 +18,6 @@ export function SiteHeader() {
   const [mobileMenuTop, setMobileMenuTop] = useState(72);
 
   useEffect(() => {
-    // Close mobile menu on navigation.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMobileOpen(false);
   }, [pathname]);
 
@@ -58,22 +55,21 @@ export function SiteHeader() {
   return (
     <header
       ref={headerRef}
-      className="sticky top-0 z-40 border-b border-zinc-200/70 bg-white/90 backdrop-blur"
+      className="sticky top-0 z-40 border-b border-stone-200/80 bg-[var(--background)]/95 backdrop-blur"
     >
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:py-4">
-        <Link href="/" className="flex items-center">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3">
+        <Link href="/" className="flex shrink-0 items-center" aria-label="Makola Marketplace – Home">
           <Image
             src="/Bold.png"
-            alt="Makola Marketplace"
-            width={120}
-            height={120}
-            className="h-20 w-auto sm:h-16 md:h-20"
+            alt=""
+            width={96}
+            height={96}
+            className="h-12 w-auto sm:h-14"
             priority
           />
-          <span className="sr-only">Makola Marketplace</span>
         </Link>
 
-        <nav className="hidden items-center gap-2 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
           <NavLink href="/" active={pathname === "/"}>
             Home
           </NavLink>
@@ -89,27 +85,25 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button
+          <Link
             href="/shopping-list"
-            variant={pathname === "/shopping-list" ? "secondary" : "primary"}
+            className="relative inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--forest)] text-white shadow-sm transition hover:bg-[var(--forest-light)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]/70 focus-visible:ring-offset-2"
+            aria-label={`Shopping list – ${count} items`}
           >
-            Shopping List
-            <span
-              className={[
-                "ml-1 inline-flex min-w-6 items-center justify-center rounded-full px-2 py-0.5 text-xs font-semibold",
-                pathname === "/shopping-list"
-                  ? "bg-zinc-900/10 text-zinc-900"
-                  : "bg-white text-zinc-900",
-              ].join(" ")}
-              aria-label={`${count} items in shopping list`}
-            >
-              {count}
-            </span>
-          </Button>
+            <ListIcon />
+            {count > 0 && (
+              <span
+                className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--terracotta)] px-1.5 text-xs font-bold text-white"
+                aria-hidden
+              >
+                {count > 99 ? "99+" : count}
+              </span>
+            )}
+          </Link>
 
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 shadow-sm transition hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background md:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-white text-zinc-900 shadow-sm transition hover:bg-stone-50 md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]/70 focus-visible:ring-offset-2"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             aria-controls="mobile-nav"
@@ -125,7 +119,7 @@ export function SiteHeader() {
           <button
             type="button"
             className="fixed inset-0 z-40 cursor-default bg-black/20 backdrop-blur-[1px]"
-            aria-label="Close menu"
+            aria-label="Close"
             onClick={() => setMobileOpen(false)}
           />
           <div
@@ -134,7 +128,7 @@ export function SiteHeader() {
           >
             <div
               id="mobile-nav"
-              className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-lg"
+              className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-lg"
               role="dialog"
               aria-label="Menu"
               aria-modal="true"
@@ -151,6 +145,9 @@ export function SiteHeader() {
                 </MobileNavLink>
                 <MobileNavLink href="/contact" active={pathname === "/contact"}>
                   Contact
+                </MobileNavLink>
+                <MobileNavLink href="/shopping-list" active={pathname === "/shopping-list"}>
+                  My List {count > 0 ? `(${count})` : ""}
                 </MobileNavLink>
               </div>
             </div>
@@ -175,10 +172,9 @@ function NavLink({
       href={href}
       className={[
         "rounded-full px-4 py-2 text-sm font-medium transition",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         active
-          ? "bg-gradient-to-r from-emerald-600 to-amber-500 text-white shadow-sm"
-          : "text-zinc-700 hover:bg-zinc-900/5",
+          ? "bg-[var(--forest)] text-white shadow-sm"
+          : "text-stone-700 hover:bg-stone-100",
       ].join(" ")}
       aria-current={active ? "page" : undefined}
     >
@@ -200,58 +196,39 @@ function MobileNavLink({
     <Link
       href={href}
       className={[
-        "flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium transition",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-        active ? "bg-zinc-900 text-white" : "text-zinc-800 hover:bg-zinc-900/5",
+        "flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium transition",
+        active ? "bg-[var(--forest)] text-white" : "text-stone-800 hover:bg-stone-100",
       ].join(" ")}
       aria-current={active ? "page" : undefined}
     >
       <span>{children}</span>
-      <span aria-hidden="true" className={active ? "text-white/70" : "text-zinc-400"}>
+      <span aria-hidden="true" className={active ? "text-white/70" : "text-stone-400"}>
         →
       </span>
     </Link>
   );
 }
 
+function ListIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
+    </svg>
+  );
+}
+
 function MenuIcon() {
   return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M3 5H17M3 10H17M3 15H17"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+      <path d="M3 5H17M3 10H17M3 15H17" />
     </svg>
   );
 }
 
 function CloseIcon() {
   return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M5 5L15 15M15 5L5 15"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+      <path d="M5 5L15 15M15 5L5 15" />
     </svg>
   );
 }
-
-

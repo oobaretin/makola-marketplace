@@ -39,7 +39,11 @@ function isValidState(v: unknown): v is ShoppingListState {
       typeof o.id === "string" &&
       typeof o.name === "string" &&
       typeof o.quantity === "number" &&
-      typeof o.addedAt === "number"
+      typeof o.addedAt === "number" &&
+      (o.checked === undefined || typeof o.checked === "boolean") &&
+      (o.productId === undefined || typeof o.productId === "string") &&
+      (o.unit === undefined || typeof o.unit === "string") &&
+      (o.category === undefined || typeof o.category === "string")
     );
   });
 }

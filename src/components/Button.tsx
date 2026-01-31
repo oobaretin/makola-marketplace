@@ -27,7 +27,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonAsButton | ButtonAsLin
     const classes = [
       "inline-flex items-center justify-center gap-2 rounded-full font-medium transition",
       "disabled:pointer-events-none disabled:opacity-50",
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
       size === "sm" ? "h-9 px-4 text-sm" : "h-11 px-5 text-sm",
       variantClasses(variant),
       className ?? "",
@@ -56,12 +56,13 @@ function variantClasses(variant: NonNullable<BaseProps["variant"]>): string {
     case "primary":
       return [
         "text-white shadow-sm",
-        "bg-gradient-to-r from-emerald-600 via-emerald-600 to-amber-500",
-        "hover:from-emerald-500 hover:via-emerald-500 hover:to-amber-400",
-        "active:from-emerald-600 active:via-emerald-600 active:to-amber-500",
+        "bg-[var(--forest)] hover:bg-[var(--forest-light)] active:bg-[var(--forest-dark)]",
       ].join(" ");
     case "secondary":
-      return "bg-amber-400 text-zinc-950 shadow-sm hover:bg-amber-300 active:bg-amber-400";
+      return [
+        "bg-[var(--terracotta)] text-white shadow-sm",
+        "hover:bg-[var(--terracotta-light)] active:bg-[var(--terracotta-muted)]",
+      ].join(" ");
     case "ghost":
       return "bg-transparent text-zinc-900 hover:bg-zinc-900/5 active:bg-zinc-900/10";
     case "danger":

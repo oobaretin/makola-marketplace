@@ -33,7 +33,7 @@ export function QuickAddForm({
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
-        className="h-11 w-full rounded-2xl border border-zinc-200 bg-white px-4 text-sm text-zinc-950 shadow-sm placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/70"
+        className="h-11 w-full rounded-2xl border border-stone-200 bg-white px-4 text-sm text-stone-950 shadow-sm placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/60"
       />
       <Button type="submit" variant="primary" disabled={!canAdd} className="sm:w-auto">
         Add item

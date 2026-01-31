@@ -4,7 +4,7 @@ import { STORE_INFO } from "@/lib/store-info";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-zinc-200/70 bg-white">
+    <footer className="border-t border-stone-200/80 bg-white">
       <div className="mx-auto w-full max-w-6xl px-4 py-12">
         <div className="grid gap-10 md:grid-cols-3">
           <div className="space-y-3">
@@ -18,60 +18,77 @@ export function SiteFooter() {
               />
               <span className="sr-only">{STORE_INFO.name}</span>
             </div>
-            <div className="text-sm text-zinc-600">
-              African groceries for Houston. Build a list, then shop in-store.
+            <div className="text-sm text-stone-600">
+              Your Houston home for African flavors. In-store only.
             </div>
-            <div className="text-sm text-zinc-600">
-              <span className="font-medium text-zinc-900">No delivery</span> — in-store only.
+            <div className="text-sm text-stone-600">
+              <span className="font-medium text-stone-900">No delivery</span> — plan your list, shop in-store.
             </div>
           </div>
 
           <div className="space-y-3">
-            <div className="text-sm font-semibold text-zinc-950">Visit</div>
-            <div className="text-sm text-zinc-600">
+            <div className="text-sm font-semibold text-stone-950">Visit</div>
+            <div className="text-sm text-stone-600">
               {STORE_INFO.addressLine1}
               <br />
               {STORE_INFO.addressLine2}
             </div>
             <a
-              className="text-sm font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:decoration-zinc-900"
+              className="text-sm font-medium text-stone-900 underline decoration-stone-300 underline-offset-4 hover:decoration-stone-900"
               href={STORE_INFO.phoneHref}
             >
               {STORE_INFO.phoneDisplay}
             </a>
-            <div className="pt-2">
+            <a
+              className="block text-sm font-medium text-[var(--forest)] hover:underline"
+              href={STORE_INFO.whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WhatsApp — check stock
+            </a>
+            <div className="pt-1 flex flex-wrap gap-x-2 gap-y-1">
+              <a
+                className="text-sm font-medium text-[var(--terracotta)] hover:underline"
+                href={STORE_INFO.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Google Maps
+              </a>
+              <span className="text-stone-300">•</span>
               <Link
                 href="/contact"
-                className="text-sm font-medium text-amber-700 hover:text-amber-800"
+                className="text-sm font-medium text-[var(--terracotta)] hover:underline"
               >
-                View hours →
+                Hours
               </Link>
             </div>
           </div>
 
           <div className="space-y-3">
-            <div className="text-sm font-semibold text-zinc-950">Quick links</div>
+            <div className="text-sm font-semibold text-stone-950">Quick links</div>
             <div className="grid gap-2 text-sm">
-              <Link className="text-zinc-700 hover:text-zinc-950" href="/">
+              <Link className="text-stone-700 hover:text-stone-950" href="/">
                 Home
               </Link>
-              <Link className="text-zinc-700 hover:text-zinc-950" href="/departments">
+              <Link className="text-stone-700 hover:text-stone-950" href="/departments">
                 Departments
               </Link>
-              <Link className="text-zinc-700 hover:text-zinc-950" href="/blog">
+              <Link className="text-stone-700 hover:text-stone-950" href="/blog">
                 Blog
               </Link>
-              <Link className="text-zinc-700 hover:text-zinc-950" href="/shopping-list">
+              <Link className="text-stone-700 hover:text-stone-950" href="/shopping-list">
                 Shopping List
               </Link>
-              <Link className="text-zinc-700 hover:text-zinc-950" href="/contact">
+              <Link className="text-stone-700 hover:text-stone-950" href="/contact">
                 Contact
               </Link>
             </div>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-2 border-t border-zinc-200/70 pt-6 text-xs text-zinc-500">
+        <div className="mt-10 flex flex-col gap-2 border-t border-stone-200/80 pt-6 text-xs text-stone-500">
           <div>
             © {new Date().getFullYear()} {STORE_INFO.name}. All rights reserved.
           </div>

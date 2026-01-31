@@ -1,51 +1,63 @@
 @import "tailwindcss";
 
+/* Modern African Market — "Modern Earth" palette */
 :root {
-  --background: #fafafa;
-  --foreground: #171717;
+  --background: #faf9f7;
+  --foreground: #1c1917;
 
-  /* Brand accents (vibrant/marketplace). */
-  --brand-emerald: #059669;
-  --brand-amber: #f59e0b;
-  --brand-rose: #e11d48;
+  /* Primary: Deep Forest Green (Growth/Freshness) */
+  --forest: #166534;
+  --forest-light: #15803d;
+  --forest-dark: #14532d;
+
+  /* Secondary: Warm Terracotta / Burnt Orange (Earth/Spices) */
+  --terracotta: #c2410c;
+  --terracotta-light: #ea580c;
+  --terracotta-muted: #9a3412;
+
+  /* Accent: Bright Golden Yellow (Energy/Value) */
+  --gold: #ca8a04;
+  --gold-light: #eab308;
+  --gold-muted: #a16207;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-montserrat);
 
-  --color-brand: var(--brand-emerald);
-  --color-brand-warm: var(--brand-amber);
-  --color-brand-danger: var(--brand-rose);
+  --color-primary: var(--forest);
+  --color-primary-light: var(--forest-light);
+  --color-primary-dark: var(--forest-dark);
+  --color-secondary: var(--terracotta);
+  --color-secondary-light: var(--terracotta-light);
+  --color-accent: var(--gold);
+  --color-accent-light: var(--gold-light);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, -apple-system, Segoe UI, Roboto,
-    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: var(--font-montserrat), system-ui, -apple-system, sans-serif;
 }
 
-/* Make focus more visible globally (components can still override). */
 :where(a, button, input, select, textarea, summary):focus-visible {
   outline: none;
 }
 
-/* Consistent link treatment for "marketplace" feel. */
 .link {
   text-decoration: underline;
   text-decoration-thickness: 1px;
+  text-offset: 4px;
   text-underline-offset: 4px;
-  text-decoration-color: color-mix(in oklab, var(--brand-amber) 55%, transparent);
+  text-decoration-color: color-mix(in oklab, var(--terracotta) 55%, transparent);
 }
 .link:hover {
-  text-decoration-color: var(--brand-amber);
+  text-decoration-color: var(--terracotta);
 }
 
 ::selection {
-  background: rgba(234, 179, 8, 0.35);
+  background: color-mix(in oklab, var(--gold-light) 40%, transparent);
 }
 
 .line-clamp-2 {
@@ -60,6 +72,21 @@ body {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Check-off animation for shopping list */
+@keyframes list-item-checked {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+.list-item-checked {
+  text-decoration: line-through;
+  opacity: 0.7;
+  animation: list-item-checked 0.25s ease-out;
 }
 
 @media print {

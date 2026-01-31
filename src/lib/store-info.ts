@@ -4,6 +4,10 @@ export const STORE_INFO = {
   addressLine2: "Houston, TX 77031",
   phoneDisplay: "713-995-4343",
   phoneHref: "tel:+17139954343",
+  /** Google Maps URL for "On the Road" (Navigator) — open directions & hours. */
+  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Makola+Marketplace+9051+W+Bellfort+Ave+Houston+TX+77031",
+  /** WhatsApp "Check Stock" — lead capture: "Don't see it? Ask us on WhatsApp." */
+  whatsappHref: "https://wa.me/17139954343",
   hours: [
     { day: "Monday", hours: "9 AM – 9 PM" },
     { day: "Tuesday", hours: "9 AM – 9 PM" },

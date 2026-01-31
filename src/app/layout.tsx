@@ -1,19 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { ShoppingListProvider } from "@/lib/shopping-list";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -22,7 +18,7 @@ export const metadata: Metadata = {
     template: "%s | Makola Marketplace",
   },
   description:
-    "Makola Marketplace is an African grocery store in Houston, TX. Build a shopping list for your next in-store visit.",
+    "Makola Marketplace — plan your trip, save your time. Houston African market: shopping list, recipes, hours, directions. In-store only.",
   applicationName: "Makola Marketplace",
   robots: {
     index: true,
@@ -39,7 +35,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${montserrat.variable} font-sans antialiased`}
       >
         <Script
           id="strip-cursor-ref-attrs"

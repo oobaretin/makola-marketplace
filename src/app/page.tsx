@@ -1,156 +1,153 @@
 import Link from "next/link";
+import { ArrivedTodayBanner } from "@/components/ArrivedTodayBanner";
 import { Button } from "@/components/Button";
 import { BlogCard } from "@/components/BlogCard";
-import { HeroCarousel } from "@/components/HeroCarousel";
-import { QuickAddForm } from "@/components/QuickAddForm";
 import { getBlogPosts } from "@/lib/blog";
-import { DEPARTMENTS } from "@/lib/departments";
-import { getHomeHeroSlides } from "@/lib/hero-slides";
+import { categories } from "@/lib/data/products";
 import { STORE_INFO } from "@/lib/store-info";
 
-export default function Home() {
+const ESSENTIALS_GRID = [
+  { label: "Tubers", href: "/departments?c=produce", chip: "produce" },
+  { label: "Grains", href: "/departments?c=pantry", chip: "pantry" },
+  { label: "Proteins", href: "/departments?c=meat", chip: "meat" },
+  { label: "Spices", href: "/departments?c=pantry", chip: "pantry" },
+  { label: "Frozen", href: "/departments?c=frozen", chip: "frozen" },
+  { label: "Household", href: "/departments?c=household", chip: "household" },
+] as const;
+
+export default function HomePage() {
   const featuredPosts = getBlogPosts().slice(0, 3);
 
   return (
     <div className="relative">
-      <div className="absolute inset-x-0 -top-10 -z-10 h-80 bg-gradient-to-b from-amber-200/60 via-emerald-100/30 to-transparent blur-2xl" />
-      <div className="absolute inset-x-0 -top-16 -z-10 h-56 bg-[radial-gradient(circle_at_20%_20%,rgba(245,158,11,0.30),transparent_55%),radial-gradient(circle_at_80%_30%,rgba(16,185,129,0.26),transparent_50%)]" />
+      <div className="absolute inset-x-0 -top-10 -z-10 h-64 bg-gradient-to-b from-[var(--forest)]/10 via-[var(--terracotta)]/5 to-transparent blur-2xl" />
 
-      <section className="grid gap-10 lg:grid-cols-2 lg:items-start">
-        <div className="space-y-7 pt-2">
-          <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">
-            Plan your next Makola run.
-          </h1>
+      <ArrivedTodayBanner />
 
-          <p className="max-w-xl text-base leading-7 text-zinc-600">
-            Build a shopping list in seconds — add anything you want, then shop in-store.
-            (No delivery.)
-          </p>
+      {/* Hero */}
+      <section className="pt-2 pb-10 text-center sm:pt-6 sm:pb-14">
+        <h1 className="text-4xl font-bold tracking-tight text-stone-950 sm:text-5xl lg:text-6xl">
+          Your Houston Home for African Flavors.
+        </h1>
+        <p className="mx-auto mt-4 max-w-xl text-lg text-stone-600">
+          Plan your trip, save your time. Build your list, then shop in-store.
+        </p>
 
-          <QuickAddForm />
-
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button href="/departments" variant="primary">
-              Browse departments
-            </Button>
-            <Button href="/shopping-list" variant="ghost">
-              View my list
-            </Button>
-          </div>
-
-          <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
-            <div className="grid gap-4 p-5 sm:grid-cols-2 sm:gap-6">
-              <div className="space-y-2">
-                <div className="text-sm font-semibold text-zinc-950">Visit us</div>
-                <div className="text-sm text-zinc-700">
-                  {STORE_INFO.addressLine1}, {STORE_INFO.addressLine2}
-                </div>
-                <div className="text-sm">
-                  <a className="link font-medium text-zinc-900" href={STORE_INFO.phoneHref}>
-                    {STORE_INFO.phoneDisplay}
-                  </a>
-                  <span className="mx-2 text-zinc-300">•</span>
-                  <Link className="link font-medium text-zinc-900" href="/contact">
-                    Hours & directions
-                  </Link>
-                </div>
-              </div>
-
-              <div className="space-y-2 sm:border-l sm:border-zinc-200 sm:pl-6">
-                <div className="text-sm font-semibold text-zinc-950">In-store only</div>
-                <div className="text-sm leading-7 text-zinc-600">
-                  No delivery. Build your list here, then shop in-store faster.
-                </div>
-                <div>
-                  <Link className="text-sm font-medium text-emerald-700 hover:text-emerald-800" href="/shopping-list">
-                    Open my list →
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <HeroCarousel
-            slides={getHomeHeroSlides()}
-          />
-
-          <div className="flex flex-wrap items-center gap-2 text-sm text-zinc-700">
-            {[
-              "Fast list",
-              "Fewer duplicates",
-              "Shop faster",
-            ].map((label) => (
-              <span
-                key={label}
-                className="rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-700"
-              >
-                {label}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mt-14 space-y-4">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <div className="text-sm font-semibold text-zinc-950">Starter list ideas</div>
-            <div className="mt-1 text-sm text-zinc-600">
-              No products yet — use these to kickstart your shopping list.
-            </div>
-          </div>
-          <Button href="/departments" variant="secondary" size="sm">
-            Browse all departments
+        {/* Action Hub */}
+        <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <Button href="/departments" variant="primary" size="md" className="min-w-[200px]">
+            Browse Departments
+          </Button>
+          <Button href="/shopping-list" variant="secondary" size="md" className="min-w-[200px]">
+            View My List
           </Button>
         </div>
+      </section>
 
-        <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
-          <ul className="divide-y divide-zinc-200/80">
-            {DEPARTMENTS.slice(0, 4).map((d) => (
-              <li key={d.slug} className="p-5">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="min-w-0">
-                    <div className="text-sm font-semibold text-zinc-950">{d.name}</div>
-                    <div className="mt-1 text-sm text-zinc-600">{d.description}</div>
-                  </div>
-                  <div className="flex flex-wrap gap-2 sm:justify-end">
-                    {d.starterItems.slice(0, 4).map((s) => (
-                      <span
-                        key={s}
-                        className="rounded-full bg-zinc-900/5 px-3 py-1 text-xs font-medium text-zinc-700"
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+      {/* The Essentials – 6-item grid */}
+      <section className="py-8">
+        <h2 className="text-xl font-semibold text-stone-950 sm:text-2xl">
+          The Essentials
+        </h2>
+        <p className="mt-1 text-sm text-stone-600">
+          Jump to a category and add items to your list.
+        </p>
+        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
+          {ESSENTIALS_GRID.map(({ label, href }) => (
+            <Link
+              key={label}
+              href={href}
+              className="flex flex-col items-center justify-center rounded-2xl border border-stone-200 bg-white py-8 shadow-sm transition hover:border-[var(--forest)]/40 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]/70 focus-visible:ring-offset-2"
+            >
+              <span className="text-base font-semibold text-stone-950">{label}</span>
+            </Link>
+          ))}
         </div>
       </section>
 
-      <section className="mt-14 space-y-6">
+      {/* Recipe-to-list (optional – keep if desired) */}
+      <section className="py-10">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">
+            <h2 className="text-2xl font-semibold tracking-tight text-stone-950">
+              Cook a dish — add the whole list
+            </h2>
+            <p className="mt-1 text-sm text-stone-600">
+              One tap adds all ingredients. Bigger basket, less forgetting.
+            </p>
+          </div>
+          <Button href="/departments" variant="ghost" size="sm">
+            Browse all
+          </Button>
+        </div>
+        <div className="mt-4 flex flex-wrap gap-3">
+          {categories.slice(0, 4).map((c) => (
+            <Link
+              key={c.id}
+              href={`/departments?c=${c.id}`}
+              className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-medium text-stone-700 shadow-sm hover:bg-stone-50"
+            >
+              {c.name}
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Blog */}
+      <section className="py-10">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="text-2xl font-semibold tracking-tight text-stone-950">
               From the blog
             </h2>
-            <p className="mt-1 text-sm text-zinc-600">
-              Shopping list tips, pantry basics, and in-store strategies.
+            <p className="mt-1 text-sm text-stone-600">
+              Shopping tips, pantry basics, and in-store strategies.
             </p>
           </div>
           <Button href="/blog" variant="ghost">
             View all posts
           </Button>
         </div>
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {featuredPosts.map((p) => (
             <BlogCard key={p.slug} post={p} />
           ))}
+        </div>
+      </section>
+
+      {/* Location / Hours – persistent at bottom */}
+      <section className="border-t border-stone-200 bg-white/80 py-10">
+        <h2 className="text-lg font-semibold text-stone-950">Location & Hours</h2>
+        <div className="mt-4 grid gap-6 sm:grid-cols-2">
+          <div>
+            <p className="text-sm font-medium text-stone-700">
+              {STORE_INFO.addressLine1}, {STORE_INFO.addressLine2}
+            </p>
+            <p className="mt-2 text-sm text-stone-600">
+              <a className="link font-medium text-stone-900" href={STORE_INFO.phoneHref}>
+                {STORE_INFO.phoneDisplay}
+              </a>
+            </p>
+            <a
+              href={STORE_INFO.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-block text-sm font-medium text-[var(--forest)] hover:underline"
+            >
+              Open in Google Maps →
+            </a>
+          </div>
+          <div>
+            <ul className="space-y-1 text-sm text-stone-700">
+              {STORE_INFO.hours.map((h) => (
+                <li key={h.day} className="flex justify-between gap-4">
+                  <span>{h.day}</span>
+                  <span>{h.hours}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3 text-xs text-stone-500">{STORE_INFO.notes.delivery}</p>
+          </div>
         </div>
       </section>
     </div>

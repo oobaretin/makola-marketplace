@@ -1,143 +1,203 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/Button";
+import { ListExportButtons } from "@/components/ListExportButtons";
 import { QuickAddForm } from "@/components/QuickAddForm";
 import { STORE_INFO } from "@/lib/store-info";
 import { useShoppingList } from "@/lib/shopping-list";
+import type { ShoppingListItem } from "@/lib/shopping-list/types";
+
+/** Sort: unchecked first (by addedAt), then checked (at bottom). */
+function sortListItems(items: ShoppingListItem[]): ShoppingListItem[] {
+  const unchecked = items
+    .filter((i) => !(i.checked ?? false))
+    .sort((a, b) => a.addedAt - b.addedAt);
+  const checked = items
+    .filter((i) => i.checked ?? false)
+    .sort((a, b) => a.addedAt - b.addedAt);
+  return [...unchecked, ...checked];
+}
+
+const EMPTY_ESSENTIALS = ["Bread", "Milk"];
 
 export default function ShoppingListPage() {
-  const { state, removeItem, setQuantity, clear } = useShoppingList();
+  const { state, removeItem, setQuantity, clear, toggleChecked } = useShoppingList();
   const totalItems = useMemo(
     () => state.items.reduce((sum, i) => sum + i.quantity, 0),
     [state.items],
   );
 
+  const sortedItems = useMemo(
+    () => sortListItems(state.items),
+    [state.items],
+  );
+
   return (
-    <div className="space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-semibold tracking-tight text-zinc-950">
-          Shopping List
+    <div className="space-y-6 pb-12">
+      {/* Sticky header: "My Makola List (count)" */}
+      <header className="sticky top-0 z-20 -mx-4 -mt-2 flex items-center justify-between border-b border-stone-200 bg-[var(--background)]/95 px-4 py-3 backdrop-blur sm:static sm:mx-0 sm:mt-0 sm:rounded-none sm:border-0 sm:bg-transparent sm:py-0">
+        <h1 className="text-lg font-bold text-stone-950 sm:text-2xl">
+          My Makola List ({state.items.length})
         </h1>
-        <p className="max-w-2xl text-sm leading-7 text-zinc-600">
-          Add anything you want — this list is saved on your device. When you’re ready,
-          shop in-store at {STORE_INFO.addressLine1}.
-        </p>
+        <span
+          className="rounded-full bg-[var(--forest)] px-3 py-1.5 text-sm font-semibold text-white"
+          aria-live="polite"
+        >
+          {totalItems} {totalItems === 1 ? "item" : "items"}
+        </span>
       </header>
 
-      <div className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <div className="text-sm font-semibold text-zinc-950">Quick add</div>
-            <div className="mt-1 text-sm text-zinc-600">
-              Type any item and press Add.
-            </div>
-          </div>
-          <div className="flex flex-col gap-2 sm:flex-row">
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => window.print()}
-              disabled={state.items.length === 0}
-            >
-              Print
-            </Button>
-            <Button
-              type="button"
-              variant="danger"
-              onClick={() => clear()}
-              disabled={state.items.length === 0}
-            >
-              Clear
-            </Button>
-          </div>
+      {/* Search bar – large, friendly */}
+      <div className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm">
+        <QuickAddForm
+          placeholder="Search for Fufu, Palm Oil, etc..."
+          className="gap-2"
+        />
+        <div className="mt-3 flex flex-wrap gap-2">
+          <ListExportButtons items={state.items} disabled={state.items.length === 0} />
+          <Button
+            type="button"
+            variant="danger"
+            size="sm"
+            onClick={() => clear()}
+            disabled={state.items.length === 0}
+          >
+            Clear all
+          </Button>
         </div>
-
-        <div className="mt-5">
-          <QuickAddForm />
+        <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50/80 px-3 py-2 text-sm text-emerald-900">
+          <strong>Don&apos;t see it?</strong>{" "}
+          <a
+            href={STORE_INFO.whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium underline decoration-emerald-400 underline-offset-2 hover:decoration-emerald-600"
+          >
+            Ask us on WhatsApp
+          </a>
         </div>
       </div>
 
       {state.items.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-zinc-300 bg-white p-10 text-center">
-          <div className="text-lg font-semibold text-zinc-950">
-            Your list is empty
+        /* Empty state */
+        <div className="rounded-3xl border-2 border-dashed border-stone-300 bg-white p-10 text-center">
+          <p className="text-stone-500 italic">
+            Your list is empty. Visit the departments to add items!
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            {EMPTY_ESSENTIALS.map((name) => (
+              <QuickAddChip key={name} name={name} />
+            ))}
           </div>
-          <div className="mt-2 text-sm text-zinc-600">
-            Browse departments for starter ideas, or add a custom item above.
-          </div>
-          <div className="mt-6 flex justify-center">
-            <Button href="/departments" variant="secondary">
+          <div className="mt-8">
+            <Button href="/departments" variant="primary">
               Browse departments
             </Button>
           </div>
         </div>
       ) : (
-        <section className="space-y-4">
-          <div className="flex items-baseline justify-between">
-            <div className="text-sm font-semibold text-zinc-950">
-              Items ({totalItems})
-            </div>
-            <div className="text-xs text-zinc-500">
-              Saved locally on this device
-            </div>
-          </div>
-
-          <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
-            <ul className="divide-y divide-zinc-200/80">
-              {state.items.map((item) => (
-                <li key={item.id} className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="min-w-0">
-                    <div className="truncate text-sm font-semibold text-zinc-950">
-                      {item.name}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <div className="inline-flex items-center rounded-full border border-zinc-200 bg-white">
-                      <button
-                        type="button"
-                        className="h-9 w-9 rounded-full text-zinc-700 hover:bg-zinc-900/5"
-                        onClick={() => setQuantity(item.id, item.quantity - 1)}
-                        aria-label={`Decrease quantity for ${item.name}`}
-                      >
-                        −
-                      </button>
-                      <input
-                        value={item.quantity}
-                        onChange={(e) => setQuantity(item.id, Number(e.target.value))}
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        className="h-9 w-12 bg-transparent text-center text-sm font-semibold text-zinc-950 outline-none"
-                        aria-label={`Quantity for ${item.name}`}
-                      />
-                      <button
-                        type="button"
-                        className="h-9 w-9 rounded-full text-zinc-700 hover:bg-zinc-900/5"
-                        onClick={() => setQuantity(item.id, item.quantity + 1)}
-                        aria-label={`Increase quantity for ${item.name}`}
-                      >
-                        +
-                      </button>
-                    </div>
-
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => removeItem(item.id)}
-                    >
-                      Remove
-                    </Button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <section className="space-y-3">
+          <ul className="space-y-3">
+            {sortedItems.map((item) => (
+              <ListItemRow
+                key={item.id}
+                item={item}
+                onToggleChecked={() => toggleChecked(item.id)}
+                onRemove={() => removeItem(item.id)}
+                onSetQuantity={(q) => setQuantity(item.id, q)}
+              />
+            ))}
+          </ul>
         </section>
       )}
     </div>
   );
 }
 
+function QuickAddChip({ name }: { name: string }) {
+  const { addItem } = useShoppingList();
+  return (
+    <button
+      type="button"
+      onClick={() => addItem(name)}
+      className="rounded-full border border-stone-200 bg-white px-5 py-2.5 text-sm font-medium text-stone-800 shadow-sm transition hover:bg-stone-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]/70"
+    >
+      + {name}
+    </button>
+  );
+}
 
+function ListItemRow({
+  item,
+  onToggleChecked,
+  onRemove,
+  onSetQuantity,
+}: {
+  item: ShoppingListItem;
+  onToggleChecked: () => void;
+  onRemove: () => void;
+  onSetQuantity: (q: number) => void;
+}) {
+  const checked = item.checked ?? false;
+
+  return (
+    <li
+      className={[
+        "flex items-center gap-3 rounded-xl bg-stone-50 p-3 transition",
+        checked ? "list-item-checked opacity-90" : "",
+      ].join(" ")}
+    >
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={onToggleChecked}
+        className="h-6 w-6 shrink-0 accent-[var(--forest)] focus:ring-2 focus:ring-[var(--gold)]/70 focus:ring-offset-0"
+        aria-label={checked ? `Uncheck ${item.name}` : `Check off ${item.name}`}
+      />
+      <span
+        className={[
+          "min-w-0 flex-1 font-medium",
+          checked ? "line-through text-stone-400" : "text-stone-800",
+        ].join(" ")}
+      >
+        {item.name}
+        {item.quantity > 1 ? ` × ${item.quantity}` : ""}
+      </span>
+      <div className="flex shrink-0 items-center gap-1">
+        {item.quantity > 1 && (
+          <div className="inline-flex items-center rounded-full border border-stone-200 bg-white">
+            <button
+              type="button"
+              className="h-8 w-8 rounded-full text-stone-600 hover:bg-stone-100 disabled:opacity-50"
+              onClick={() => onSetQuantity(item.quantity - 1)}
+              disabled={item.quantity <= 1}
+              aria-label={`Decrease ${item.name}`}
+            >
+              −
+            </button>
+            <span className="w-8 text-center text-sm font-medium text-stone-800">
+              {item.quantity}
+            </span>
+            <button
+              type="button"
+              className="h-8 w-8 rounded-full text-stone-600 hover:bg-stone-100"
+              onClick={() => onSetQuantity(item.quantity + 1)}
+              aria-label={`Increase ${item.name}`}
+            >
+              +
+            </button>
+          </div>
+        )}
+        <button
+          type="button"
+          onClick={onRemove}
+          className="text-sm text-red-500 hover:text-red-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]/70 focus-visible:rounded"
+          aria-label={`Remove ${item.name}`}
+        >
+          Remove
+        </button>
+      </div>
+    </li>
+  );
+}

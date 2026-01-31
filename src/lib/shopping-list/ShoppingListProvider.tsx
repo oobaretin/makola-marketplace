@@ -41,6 +41,25 @@ export function ShoppingListProvider({ children }: { children: React.ReactNode }
   }, []);
 
   const addItem = useCallback((name: string) => dispatch({ type: "add", name }), []);
+  const addItems = useCallback((names: string[]) => {
+    names.forEach((name) => dispatch({ type: "add", name }));
+  }, []);
+  const addProduct = useCallback(
+    (product: { id: string; category: string; name: string; unit: string }) =>
+      dispatch({ type: "addProduct", product }),
+    [],
+  );
+  const isInList = useCallback(
+    (productId: string) =>
+      state.items.some(
+        (i) => i.productId === productId || i.id === productId,
+      ),
+    [state.items],
+  );
+  const toggleChecked = useCallback(
+    (id: string) => dispatch({ type: "toggleChecked", id }),
+    [],
+  );
   const removeItem = useCallback(
     (id: string) => dispatch({ type: "remove", id }),
     [],
@@ -52,8 +71,28 @@ export function ShoppingListProvider({ children }: { children: React.ReactNode }
   const clear = useCallback(() => dispatch({ type: "clear" }), []);
 
   const value = useMemo(
-    () => ({ state, addItem, removeItem, setQuantity, clear }),
-    [state, addItem, removeItem, setQuantity, clear],
+    () => ({
+      state,
+      addItem,
+      addItems,
+      addProduct,
+      isInList,
+      toggleChecked,
+      removeItem,
+      setQuantity,
+      clear,
+    }),
+    [
+      state,
+      addItem,
+      addItems,
+      addProduct,
+      isInList,
+      toggleChecked,
+      removeItem,
+      setQuantity,
+      clear,
+    ],
   );
 
   return <ShoppingListContext.Provider value={value}>{children}</ShoppingListContext.Provider>;
