@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { getBlogPostBySlug, getBlogPosts } from "@/lib/blog";
+import { getBlogPostBySlug, getBlogPosts, JOLLOF_LIST_POST_SLUG } from "@/lib/blog";
+import { AddJollofToListButton } from "@/components/AddJollofToListButton";
 
 export function generateStaticParams() {
   return getBlogPosts().map((p) => ({ slug: p.slug }));
@@ -75,6 +76,12 @@ export default async function BlogPostPage({
           return null;
         })}
       </article>
+
+      {post.slug === JOLLOF_LIST_POST_SLUG && (
+        <div className="pt-4">
+          <AddJollofToListButton />
+        </div>
+      )}
     </div>
   );
 }

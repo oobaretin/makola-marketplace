@@ -13,7 +13,7 @@ import {
 } from "@/lib/data/products";
 import { useShoppingList } from "@/lib/shopping-list";
 
-const CHIP_IDS = ["all", "produce", "pantry", "liquids", "meat", "frozen", "household"] as const;
+const CHIP_IDS = ["all", "produce", "pantry", "meat", "flour", "drinks", "snacks"] as const;
 
 function DepartmentsContent() {
   const searchParams = useSearchParams();

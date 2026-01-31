@@ -1,6 +1,6 @@
 /**
- * Data structure: categories + products (hard-coded).
- * List items reference products by id for "Added" state and display.
+ * Hard-coded inventory: West African Houston market categories.
+ * Used for departments, shopping list grouping, and recipe bundles.
  */
 export type Category = {
   id: string;
@@ -10,56 +10,56 @@ export type Category = {
 
 export type Product = {
   id: string;
-  category: string;
   name: string;
+  category: string;
   unit: string;
 };
 
 export const categories: Category[] = [
   { id: "produce", name: "Produce & Tubers", icon: "🥬" },
-  { id: "pantry", name: "Pantry & Grains", icon: "🌾" },
-  { id: "meat", name: "Meat & Fish", icon: "🥩" },
-  { id: "frozen", name: "Frozen Foods", icon: "❄️" },
-  { id: "liquids", name: "Liquids & Oils", icon: "🫒" },
-  { id: "household", name: "Household", icon: "🧻" },
+  { id: "pantry", name: "Pantry Staples", icon: "🌾" },
+  { id: "meat", name: "Protein & Fish", icon: "🥩" },
+  { id: "flour", name: "Flours & Swallows", icon: "🫓" },
+  { id: "drinks", name: "Drinks", icon: "🥤" },
+  { id: "snacks", name: "Snacks", icon: "🍿" },
 ];
 
 export const products: Product[] = [
-  // Produce & Tubers
-  { id: "1", category: "produce", name: "Puna Yam", unit: "per lb" },
-  { id: "2", category: "produce", name: "Plantain (Ripe)", unit: "per bunch" },
-  { id: "3", category: "produce", name: "Plantain (Green)", unit: "per bunch" },
-  { id: "4", category: "produce", name: "Scotch Bonnet Peppers", unit: "small bag" },
-  { id: "5", category: "produce", name: "Cassava", unit: "per piece" },
-  { id: "6", category: "produce", name: "Garden Eggs", unit: "per bag" },
-  // Pantry & Grains
-  { id: "7", category: "pantry", name: "Jasmine Rice (20lb)", unit: "bag" },
-  { id: "8", category: "pantry", name: "Gari", unit: "per bag" },
-  { id: "9", category: "pantry", name: "Basmati Rice", unit: "per bag" },
-  { id: "10", category: "pantry", name: "Brown Beans", unit: "per bag" },
-  { id: "11", category: "pantry", name: "Honey Beans", unit: "per bag" },
-  { id: "12", category: "pantry", name: "Egusi", unit: "per bag" },
-  { id: "13", category: "pantry", name: "Ogbono", unit: "per bag" },
-  // Liquids & Oils
-  { id: "14", category: "liquids", name: "Red Palm Oil", unit: "1L bottle" },
-  { id: "15", category: "liquids", name: "Vegetable Oil", unit: "per bottle" },
-  { id: "16", category: "liquids", name: "Shito", unit: "per jar" },
-  { id: "17", category: "liquids", name: "Malt drinks", unit: "per pack" },
-  // Meat & Fish
-  { id: "18", category: "meat", name: "Smoked Catfish", unit: "each" },
-  { id: "19", category: "meat", name: "Stockfish", unit: "per piece" },
-  { id: "20", category: "meat", name: "Goat Meat", unit: "per lb" },
-  { id: "21", category: "meat", name: "Oxtail", unit: "per lb" },
-  { id: "22", category: "meat", name: "Hen", unit: "each" },
-  // Frozen
-  { id: "23", category: "frozen", name: "Frozen Chopped Spinach", unit: "pack" },
-  { id: "24", category: "frozen", name: "Frozen Fufu", unit: "per pack" },
-  { id: "25", category: "frozen", name: "Frozen Plantain", unit: "per pack" },
-  { id: "26", category: "frozen", name: "Frozen Pounded Yam", unit: "per pack" },
-  // Household
-  { id: "27", category: "household", name: "Tissue", unit: "per pack" },
-  { id: "28", category: "household", name: "Plastic bags", unit: "per roll" },
-  { id: "29", category: "household", name: "Soap", unit: "each" },
+  // PRODUCE & TUBERS
+  { id: "p1", name: "Puna Yam (Large)", category: "produce", unit: "per tuber" },
+  { id: "p2", name: "Green Plantains", category: "produce", unit: "per bunch" },
+  { id: "p3", name: "Scotch Bonnet Peppers (Rodo)", category: "produce", unit: "small bag" },
+  { id: "p4", name: "Red Onions", category: "produce", unit: "bag" },
+  { id: "p5", name: "Fresh Ginger", category: "produce", unit: "lb" },
+  { id: "p6", name: "Garden Eggs (African Eggplant)", category: "produce", unit: "lb" },
+
+  // PANTRY STAPLES
+  { id: "s1", name: "African Elephant Jasmine Rice", category: "pantry", unit: "50lb bag" },
+  { id: "s2", name: "Red Palm Oil (Zomi)", category: "pantry", unit: "1L bottle" },
+  { id: "s3", name: "Gari (White)", category: "pantry", unit: "5lb bag" },
+  { id: "s4", name: "Gari (Yellow/Ijebu)", category: "pantry", unit: "5lb bag" },
+  { id: "s5", name: "Honey Beans (Oloyin)", category: "pantry", unit: "4lb bag" },
+  { id: "s6", name: "Tomato Paste (De Rica/Gino)", category: "pantry", unit: "tin" },
+  { id: "s7", name: "Maggi Seasoning Cubes (Star)", category: "pantry", unit: "pack" },
+  { id: "s8", name: "Indomie Instant Noodles", category: "pantry", unit: "case" },
+
+  // PROTEIN & FISH
+  { id: "m1", name: "Smoked Catfish (Dry)", category: "meat", unit: "each" },
+  { id: "m2", name: "Stockfish Head", category: "meat", unit: "per piece" },
+  { id: "m3", name: "Ground Crayfish", category: "meat", unit: "container" },
+  { id: "m4", name: "Titus Sardines", category: "meat", unit: "tin" },
+  { id: "m5", name: "Frozen Goat Meat (Cut)", category: "meat", unit: "5lb bag" },
+  { id: "m6", name: "Hard Chicken (Old Hen)", category: "meat", unit: "each" },
+
+  // FLOURS & SWALLOWS
+  { id: "f1", name: "Pounded Yam Flour (Iyan)", category: "flour", unit: "5lb bag" },
+  { id: "f2", name: "Cassava Flour (Lafun)", category: "flour", unit: "lb" },
+  { id: "f3", name: "Banku Mix", category: "flour", unit: "pack" },
+
+  // SNACKS & DRINKS
+  { id: "d1", name: "Malta Guinness / Supermalt", category: "drinks", unit: "6-pack" },
+  { id: "d2", name: "Plantain Chips (Spicy)", category: "snacks", unit: "bag" },
+  { id: "d3", name: "Ghana Fresh Palm Drink", category: "drinks", unit: "bottle" },
 ];
 
 export function getProductsByCategory(categoryId: string): Product[] {
@@ -79,3 +79,13 @@ export function searchProducts(q: string): Product[] {
       p.name.toLowerCase().includes(lower) || p.unit.toLowerCase().includes(lower),
   );
 }
+
+/** Category order for store-ready shopping list (matches store layout). */
+export const CATEGORY_ORDER: string[] = [
+  "produce",
+  "pantry",
+  "meat",
+  "flour",
+  "snacks",
+  "drinks",
+];

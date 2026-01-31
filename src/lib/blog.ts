@@ -14,7 +14,94 @@ export type BlogPost = {
   >;
 };
 
+/** Slug that shows the "Add all Jollof ingredients to my list" button. */
+export const JOLLOF_LIST_POST_SLUG = "ultimate-jollof-rice-shopping-list";
+
 export const BLOG_POSTS: BlogPost[] = [
+  {
+    slug: "where-to-find-authentic-west-african-ingredients-houston",
+    title: "Where to Find Authentic West African Ingredients in Houston",
+    excerpt:
+      "Just moved to Houston? Here’s where to get fresh Ugu, bitter leaf, Puna yam, and other West African staples—plus how to build your list before you go.",
+    publishedAt: "2026-01-08",
+    readTimeMinutes: 5,
+    coverHint: "West African ingredients Houston",
+    content: [
+      {
+        type: "p",
+        text: "If you’ve just moved to Houston—or you’re tired of driving across town for one bag of gari—you’re not alone. Finding authentic West African ingredients can feel hit-or-miss unless you know where to look.",
+      },
+      {
+        type: "p",
+        text: "Makola Marketplace is on W. Bellfort Ave in Houston, and we stock the items that are hardest to find elsewhere: fresh Ugu, bitter leaf, Puna yam, Scotch bonnets, plantains (green and ripe), palm oil, and pantry staples like jasmine rice, brown beans, and egusi.",
+      },
+      { type: "h2", text: "What you can find at Makola (and why it matters)" },
+      {
+        type: "p",
+        text: "We focus on Nigerian and Ghanaian groceries so you don’t have to guess which store has what. Think tubers and produce (yams, plantains, cassava, garden eggs), pantry and grains (gari, rice, beans, egusi, ogbono), oils and liquids (palm oil, vegetable oil, shito, malt drinks), and proteins (stockfish, smoked catfish, goat meat, oxtail, hen).",
+      },
+      { type: "h2", text: "Before you drive: build your list online" },
+      {
+        type: "p",
+        text: "We’re in-store only—no delivery. So the best move is to build your shopping list on this site before you come. Add everything you need (produce, pantry, oils, meat), then shop in one trip. You’ll save time and avoid the “I forgot one thing” second drive.",
+      },
+      {
+        type: "ul",
+        items: [
+          "Browse our produce department and add items to your list.",
+          "Check pantry and grains for rice, beans, gari, and soup bases.",
+          "Add oils and liquids, then proteins—so your list matches how the store is laid out.",
+        ],
+      },
+      {
+        type: "p",
+        text: "We’re at 9051 W Bellfort Ave, Houston, TX 77031. Build your list, then visit us—we’re your Houston home for African flavors.",
+      },
+    ],
+  },
+  {
+    slug: "ultimate-jollof-rice-shopping-list",
+    title: "The Ultimate Jollof Rice Shopping List",
+    excerpt:
+      "Every ingredient you need for Jollof rice—Jasmine rice, tomato paste, Scotch bonnets, palm oil, and more. Add the full list to your Makola list in one tap.",
+    publishedAt: "2026-01-08",
+    readTimeMinutes: 4,
+    coverHint: "Jollof rice shopping list",
+    content: [
+      {
+        type: "p",
+        text: "Whether you’re cooking for a party or just craving a proper Jollof, having the right ingredients in one place saves time and stress. Here’s the full list of what you need—and how to add it all to your Makola shopping list in one tap.",
+      },
+      { type: "h2", text: "Jollof rice ingredients (the full list)" },
+      {
+        type: "ul",
+        items: [
+          "Jasmine rice (or long-grain parboiled)",
+          "Red palm oil",
+          "Vegetable oil",
+          "Tomato paste",
+          "Fresh tomatoes",
+          "Scotch bonnet peppers",
+          "Onions",
+          "Red bell pepper",
+          "Curry powder",
+          "Thyme",
+          "Bay leaves",
+          "Stock cubes",
+          "Salt",
+        ],
+      },
+      {
+        type: "p",
+        text: "We carry Jasmine rice, red palm oil, vegetable oil, Scotch bonnet peppers, and more at Makola. Use the button below to add all the Jollof staples we stock to your list—then shop in-store at 9051 W Bellfort Ave.",
+      },
+      { type: "h2", text: "Add all Jollof ingredients to your list" },
+      {
+        type: "p",
+        text: "Tap the button below to add Jasmine rice, palm oil, vegetable oil, Scotch bonnets, and brown beans (optional side) to your Makola list. You can adjust quantities on your list before you shop.",
+      },
+    ],
+  },
   {
     slug: "makola-kitchen-food-to-go",
     title: "Makola Kitchen (Food To Go): what to expect + how to shop around it",

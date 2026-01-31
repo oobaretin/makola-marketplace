@@ -7,12 +7,12 @@ import { categories } from "@/lib/data/products";
 import { STORE_INFO } from "@/lib/store-info";
 
 const ESSENTIALS_GRID = [
-  { label: "Tubers", href: "/departments?c=produce", chip: "produce" },
-  { label: "Grains", href: "/departments?c=pantry", chip: "pantry" },
-  { label: "Proteins", href: "/departments?c=meat", chip: "meat" },
-  { label: "Spices", href: "/departments?c=pantry", chip: "pantry" },
-  { label: "Frozen", href: "/departments?c=frozen", chip: "frozen" },
-  { label: "Household", href: "/departments?c=household", chip: "household" },
+  { label: "Produce", href: "/departments?c=produce", chip: "produce" },
+  { label: "Pantry", href: "/departments?c=pantry", chip: "pantry" },
+  { label: "Protein & Fish", href: "/departments?c=meat", chip: "meat" },
+  { label: "Flours & Swallows", href: "/departments?c=flour", chip: "flour" },
+  { label: "Drinks", href: "/departments?c=drinks", chip: "drinks" },
+  { label: "Snacks", href: "/departments?c=snacks", chip: "snacks" },
 ] as const;
 
 export default function HomePage() {

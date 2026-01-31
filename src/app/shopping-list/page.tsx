@@ -1,22 +1,42 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Button } from "@/components/Button";
 import { ListExportButtons } from "@/components/ListExportButtons";
 import { QuickAddForm } from "@/components/QuickAddForm";
 import { STORE_INFO } from "@/lib/store-info";
 import { useShoppingList } from "@/lib/shopping-list";
 import type { ShoppingListItem } from "@/lib/shopping-list/types";
+import {
+  categories,
+  CATEGORY_ORDER,
+} from "@/lib/data/products";
 
-/** Sort: unchecked first (by addedAt), then checked (at bottom). */
-function sortListItems(items: ShoppingListItem[]): ShoppingListItem[] {
-  const unchecked = items
-    .filter((i) => !(i.checked ?? false))
-    .sort((a, b) => a.addedAt - b.addedAt);
-  const checked = items
-    .filter((i) => i.checked ?? false)
-    .sort((a, b) => a.addedAt - b.addedAt);
-  return [...unchecked, ...checked];
+const OTHER_CATEGORY = "other";
+
+/** Group items by category (store-ready: Produce, Pantry, Meat, etc.). Within each group: unchecked first, then checked. */
+function groupItemsByCategory(items: ShoppingListItem[]): Map<string, ShoppingListItem[]> {
+  const byCategory = new Map<string, ShoppingListItem[]>();
+  for (const item of items) {
+    const cat = item.category && CATEGORY_ORDER.includes(item.category)
+      ? item.category
+      : OTHER_CATEGORY;
+    const list = byCategory.get(cat) ?? [];
+    list.push(item);
+    byCategory.set(cat, list);
+  }
+  for (const [, list] of byCategory) {
+    const unchecked = list.filter((i) => !(i.checked ?? false)).sort((a, b) => a.addedAt - b.addedAt);
+    const checked = list.filter((i) => i.checked ?? false).sort((a, b) => a.addedAt - b.addedAt);
+    list.length = 0;
+    list.push(...unchecked, ...checked);
+  }
+  return byCategory;
+}
+
+/** Section order: store layout (produce → pantry → meat → flour → snacks → drinks → other). */
+function getSectionOrder(): string[] {
+  return [...CATEGORY_ORDER, OTHER_CATEGORY];
 }
 
 const EMPTY_ESSENTIALS = ["Bread", "Milk"];
@@ -28,10 +48,11 @@ export default function ShoppingListPage() {
     [state.items],
   );
 
-  const sortedItems = useMemo(
-    () => sortListItems(state.items),
+  const itemsByCategory = useMemo(
+    () => groupItemsByCategory(state.items),
     [state.items],
   );
+  const sectionOrder = useMemo(() => getSectionOrder(), []);
 
   return (
     <div className="space-y-6 pb-12">
@@ -97,18 +118,36 @@ export default function ShoppingListPage() {
           </div>
         </div>
       ) : (
-        <section className="space-y-3">
-          <ul className="space-y-3">
-            {sortedItems.map((item) => (
-              <ListItemRow
-                key={item.id}
-                item={item}
-                onToggleChecked={() => toggleChecked(item.id)}
-                onRemove={() => removeItem(item.id)}
-                onSetQuantity={(q) => setQuantity(item.id, q)}
-              />
-            ))}
-          </ul>
+        <section className="space-y-6">
+          <p className="text-xs text-stone-500">
+            Sorted by category so your list matches the store layout.
+          </p>
+          {sectionOrder.map((categoryId) => {
+            const sectionItems = itemsByCategory.get(categoryId);
+            if (!sectionItems?.length) return null;
+            const categoryLabel =
+              categoryId === OTHER_CATEGORY
+                ? "Other"
+                : categories.find((c) => c.id === categoryId)?.name ?? categoryId;
+            return (
+              <div key={categoryId}>
+                <h2 className="mb-2 text-sm font-semibold text-stone-700">
+                  {categoryLabel}
+                </h2>
+                <ul className="space-y-3">
+                  {sectionItems.map((item) => (
+                    <ListItemRow
+                      key={item.id}
+                      item={item}
+                      onToggleChecked={() => toggleChecked(item.id)}
+                      onRemove={() => removeItem(item.id)}
+                      onSetQuantity={(q) => setQuantity(item.id, q)}
+                    />
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
         </section>
       )}
     </div>

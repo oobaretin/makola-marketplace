@@ -12,17 +12,37 @@ const montserrat = Montserrat({
   weight: ["400", "500", "600", "700"],
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://makola-marketplace.vercel.app";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Makola Marketplace",
+    default: "Makola Marketplace | African Grocery Store Houston, TX",
     template: "%s | Makola Marketplace",
   },
   description:
-    "Makola Marketplace — plan your trip, save your time. Houston African market: shopping list, recipes, hours, directions. In-store only.",
+    "Find fresh Yams, Plantains, Palm Oil, and authentic West African staples in Houston. Build your shopping list online and shop in-store at 9051 W Bellfort Ave.",
+  keywords: [
+    "African grocery Houston",
+    "Nigerian food Houston",
+    "Ghanaian market Houston",
+    "fufu",
+    "palm oil",
+    "plantains",
+    "Makola Houston",
+    "West African ingredients Houston",
+  ],
   applicationName: "Makola Marketplace",
   robots: {
     index: true,
     follow: true,
+  },
+  openGraph: {
+    title: "Makola Marketplace - Your Digital Shopping List",
+    description:
+      "Build your list, then shop for authentic African flavors in Houston.",
+    images: ["/og-image.jpg"],
+    type: "website",
   },
 };
 
