@@ -3,22 +3,29 @@ import { ArrivedTodayBanner } from "@/components/ArrivedTodayBanner";
 import { Button } from "@/components/Button";
 import { BlogCard } from "@/components/BlogCard";
 import DailySpecial from "@/components/DailySpecial";
+import { HeroCarousel } from "@/components/HeroCarousel";
 import HowItWorks from "@/components/HowItWorks";
+import { RecipeToListItem } from "@/components/RecipeToListItem";
 import { getBlogPosts } from "@/lib/blog";
-import { categories } from "@/lib/data/products";
 import { STORE_INFO } from "@/lib/store-info";
+import { getHomeHeroSlides } from "@/lib/hero-slides";
+import { RECIPES } from "@/lib/recipes";
 
 const ESSENTIALS_GRID = [
-  { label: "Produce", href: "/departments?c=produce", chip: "produce" },
-  { label: "Pantry", href: "/departments?c=pantry", chip: "pantry" },
-  { label: "Protein & Fish", href: "/departments?c=meat", chip: "meat" },
-  { label: "Flours & Swallows", href: "/departments?c=flour", chip: "flour" },
-  { label: "Drinks", href: "/departments?c=drinks", chip: "drinks" },
-  { label: "Snacks", href: "/departments?c=snacks", chip: "snacks" },
+  { label: "Produce", href: "/departments?c=produce" },
+  { label: "Pantry", href: "/departments?c=pantry" },
+  { label: "Protein & Fish", href: "/departments?c=meat" },
+  { label: "Flours & Swallows", href: "/departments?c=flour" },
+  { label: "Drinks", href: "/departments?c=drinks" },
+  { label: "Snacks", href: "/departments?c=snacks" },
+  { label: "Wellness & Beauty", href: "/departments?c=beauty" },
+  { label: "Kitchen Menu", href: "/departments?c=kitchen" },
 ] as const;
 
 export default function HomePage() {
   const featuredPosts = getBlogPosts().slice(0, 3);
+  const heroSlides = getHomeHeroSlides();
+  const featuredRecipes = RECIPES.slice(0, 4);
 
   return (
     <div className="relative">
@@ -27,7 +34,13 @@ export default function HomePage() {
       <ArrivedTodayBanner />
 
       {/* Hero */}
-      <section className="pt-2 pb-10 text-center sm:pt-6 sm:pb-14">
+      <section className="pt-2 pb-10 sm:pt-6 sm:pb-14">
+        {heroSlides.length > 0 && (
+          <div className="mb-8">
+            <HeroCarousel slides={heroSlides} />
+          </div>
+        )}
+        <div className="text-center">
         <h1 className="text-4xl font-bold tracking-tight text-stone-950 sm:text-5xl lg:text-6xl">
           Your Houston Home for African Flavors.
         </h1>
@@ -46,6 +59,7 @@ export default function HomePage() {
           <Button href="/shopping-list" variant="secondary" size="md" className="min-w-[200px]">
             View My List
           </Button>
+        </div>
         </div>
       </section>
 
@@ -81,7 +95,7 @@ export default function HomePage() {
         <p className="mt-1 text-sm text-stone-600">
           Jump to a category and add items to your list.
         </p>
-        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
+        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {ESSENTIALS_GRID.map(({ label, href }) => (
             <Link
               key={label}
@@ -109,15 +123,9 @@ export default function HomePage() {
             Browse all
           </Button>
         </div>
-        <div className="mt-4 flex flex-wrap gap-3">
-          {categories.slice(0, 4).map((c) => (
-            <Link
-              key={c.id}
-              href={`/departments?c=${c.id}`}
-              className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-medium text-stone-700 shadow-sm hover:bg-stone-50"
-            >
-              {c.name}
-            </Link>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {featuredRecipes.map((recipe) => (
+            <RecipeToListItem key={recipe.slug} recipe={recipe} />
           ))}
         </div>
       </section>

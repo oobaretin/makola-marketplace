@@ -1,11 +1,35 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { getBlogPostBySlug, getBlogPosts, JOLLOF_LIST_POST_SLUG } from "@/lib/blog";
 import { AddJollofToListButton } from "@/components/AddJollofToListButton";
+import { SITE_URL } from "@/lib/site-url";
 
 export function generateStaticParams() {
   return getBlogPosts().map((p) => ({ slug: p.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getBlogPostBySlug(slug);
+  if (!post) return {};
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: "article",
+      publishedTime: post.publishedAt,
+      images: post.coverImageSrc ? [`${SITE_URL}${post.coverImageSrc}`] : [`${SITE_URL}/Bold.png`],
+    },
+  };
 }
 
 export default async function BlogPostPage({

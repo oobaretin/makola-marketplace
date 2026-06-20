@@ -1,7 +1,7 @@
 "use client";
 
-import { Suspense, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { Suspense, useCallback, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/Button";
 import {
@@ -16,11 +16,24 @@ import { useShoppingList } from "@/lib/shopping-list";
 const CHIP_IDS = ["all", "produce", "pantry", "meat", "flour", "drinks", "snacks", "beauty", "kitchen"] as const;
 
 function DepartmentsContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const chipParam = searchParams.get("c") ?? "all";
   const [search, setSearch] = useState("");
-  const [activeChip, setActiveChip] = useState<string>(
-    CHIP_IDS.includes(chipParam as (typeof CHIP_IDS)[number]) ? chipParam : "all",
+
+  const activeChip = useMemo(() => {
+    const chipParam = searchParams.get("c") ?? "all";
+    return CHIP_IDS.includes(chipParam as (typeof CHIP_IDS)[number]) ? chipParam : "all";
+  }, [searchParams]);
+
+  const selectChip = useCallback(
+    (chip: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (chip === "all") params.delete("c");
+      else params.set("c", chip);
+      const query = params.toString();
+      router.replace(query ? `/departments?${query}` : "/departments", { scroll: false });
+    },
+    [router, searchParams],
   );
 
   const filteredProducts = useMemo(() => {
@@ -83,7 +96,7 @@ function DepartmentsContent() {
           <button
             key={c}
             type="button"
-            onClick={() => setActiveChip(c)}
+            onClick={() => selectChip(c)}
             className={[
               "shrink-0 rounded-full px-4 py-2 text-sm font-medium transition",
               activeChip === c

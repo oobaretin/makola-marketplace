@@ -59,40 +59,42 @@ export function ListExportButtons({
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <Button
+    <div className="flex flex-col gap-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={() => window.print()}
+          disabled={disabled}
+        >
+          Print
+        </Button>
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={handleCopy}
+          disabled={disabled}
+          aria-live="polite"
+        >
+          {copied ? "Copied!" : "Copy list"}
+        </Button>
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={handleShare}
+          disabled={disabled}
+        >
+          Share / SMS
+        </Button>
+      </div>
+      <button
         type="button"
-        variant="ghost"
-        onClick={() => window.print()}
-        disabled={disabled}
-      >
-        Print
-      </Button>
-      <Button
-        type="button"
-        variant="ghost"
-        onClick={handleCopy}
-        disabled={disabled}
-        aria-live="polite"
-      >
-        {copied ? "Copied!" : "Copy list"}
-      </Button>
-      <Button
-        type="button"
-        variant="ghost"
-        onClick={handleShare}
-        disabled={disabled}
-      >
-        Share / SMS
-      </Button>
-      <Button
-        type="button"
-        variant="ghost"
         onClick={handleShareWhatsApp}
         disabled={disabled}
+        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#25D366] py-3.5 font-bold text-white shadow-lg transition hover:bg-[#20ba5a] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2"
       >
-        WhatsApp
-      </Button>
+        Share List via WhatsApp
+      </button>
     </div>
   );
 }

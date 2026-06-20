@@ -8,6 +8,10 @@ import { useShoppingList } from "@/lib/shopping-list";
 
 export function SiteHeader() {
   const pathname = usePathname();
+  return <SiteHeaderInner key={pathname} pathname={pathname} />;
+}
+
+function SiteHeaderInner({ pathname }: { pathname: string }) {
   const { state } = useShoppingList();
   const count = useMemo(
     () => state.items.reduce((sum, i) => sum + i.quantity, 0),
@@ -16,10 +20,6 @@ export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const headerRef = useRef<HTMLElement | null>(null);
   const [mobileMenuTop, setMobileMenuTop] = useState(72);
-
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {

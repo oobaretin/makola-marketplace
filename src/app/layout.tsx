@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+import { LocalBusinessSchema } from "@/components/LocalBusinessSchema";
 import { ShoppingListProvider } from "@/lib/shopping-list";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { SITE_URL } from "@/lib/site-url";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -12,7 +14,7 @@ const montserrat = Montserrat({
   weight: ["400", "500", "600", "700"],
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://makola-marketplace.vercel.app";
+const isDev = process.env.NODE_ENV === "development";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -45,7 +47,7 @@ export const metadata: Metadata = {
     title: "Makola Marketplace - Your Digital Shopping List",
     description:
       "Build your list, then shop for authentic African flavors in Houston.",
-    images: ["/og-image.jpg"],
+    images: ["/Bold.png"],
     type: "website",
   },
 };
@@ -61,6 +63,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${montserrat.variable} font-sans antialiased`}
       >
+        {isDev ? (
         <Script
           id="strip-cursor-ref-attrs"
           strategy="beforeInteractive"
@@ -110,6 +113,8 @@ export default function RootLayout({
     // no-op
   }
 })();`}</Script>
+        ) : null}
+        <LocalBusinessSchema />
         <ShoppingListProvider>
           <a
             className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-zinc-900 focus:shadow-lg"
