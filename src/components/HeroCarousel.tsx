@@ -81,23 +81,10 @@ export function HeroCarousel({
             ))}
           </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-transparent" />
 
-        <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
-          <div id={regionId} className="sr-only">
-            Slide {index + 1} of {count}
-          </div>
-
-          {(active.label || active.description) && (
-            <div className="max-w-xl">
-              {active.label ? (
-                <div className="text-sm font-semibold tracking-tight text-white">{active.label}</div>
-              ) : null}
-              {active.description ? (
-                <div className="mt-1 text-xs leading-5 text-white/90 sm:text-sm">{active.description}</div>
-              ) : null}
-            </div>
-          )}
+        <div className="sr-only" id={regionId}>
+          Slide {index + 1} of {count}
+          {active.alt ? `: ${active.alt}` : ""}
         </div>
 
         {count > 1 ? (
