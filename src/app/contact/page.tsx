@@ -1,4 +1,5 @@
 import { STORE_INFO } from "@/lib/store-info";
+import { StoreOpenBadge } from "@/components/StoreOpenBadge";
 
 export const metadata = {
   title: "Contact",
@@ -144,9 +145,10 @@ export default function ContactPage() {
               <ClockIcon className="h-6 w-6" />
             </div>
             <div>
-              <h2 className="mb-1 text-xl font-bold text-stone-800">
-                Hours
-              </h2>
+              <div className="mb-2 flex flex-wrap items-center gap-3">
+                <h2 className="text-xl font-bold text-stone-800">Hours</h2>
+                <StoreOpenBadge />
+              </div>
               <ul className="space-y-1 text-stone-600">
                 <li>
                   <span className="font-medium">Mon – Sat:</span>{" "}
@@ -163,6 +165,23 @@ export default function ContactPage() {
           <p className="text-sm text-stone-500">
             {STORE_INFO.notes.delivery}
           </p>
+
+          <section className="rounded-2xl border border-stone-200 bg-stone-50 p-5">
+            <h2 className="text-lg font-bold text-stone-900">
+              Fresh arrivals & kitchen specials
+            </h2>
+            <p className="mt-1 text-sm text-stone-600">
+              Get a heads-up on new products and what&apos;s cooking in the Makola Kitchen.
+            </p>
+            <a
+              href={STORE_INFO.whatsappUpdatesHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center rounded-full bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#20ba5a]"
+            >
+              Get updates on WhatsApp
+            </a>
+          </section>
         </div>
 
         {/* Map Integration */}

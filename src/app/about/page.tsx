@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 export const metadata = {
   title: "About Us | Makola Marketplace – From West Africa to West Bellfort",
@@ -72,9 +71,6 @@ export default function AboutPage() {
               <span className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-bold text-stone-700">
                 🍲 Hot Kitchen
               </span>
-              <span className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-bold text-stone-700">
-                📦 Wholesale Available
-              </span>
             </div>
           </div>
         </div>
@@ -118,20 +114,6 @@ export default function AboutPage() {
             </p>
           </div>
         </div>
-      </section>
-
-      {/* Meet the Staff – placeholder for client to add team photo/quote */}
-      <section className="mt-16 rounded-2xl border border-dashed border-stone-200 bg-stone-50/50 px-6 py-10 text-center">
-        <p className="text-sm font-medium text-stone-500">
-          Meet the team — add a photo and a &quot;Welcome to the family!&quot;
-          quote here to add warmth and trust.
-        </p>
-        <Link
-          href="/contact"
-          className="mt-4 inline-block text-sm font-bold text-[var(--forest)] hover:underline"
-        >
-          Visit us →
-        </Link>
       </section>
     </div>
   );

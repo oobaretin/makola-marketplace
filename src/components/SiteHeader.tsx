@@ -76,6 +76,9 @@ function SiteHeaderInner({ pathname }: { pathname: string }) {
           <NavLink href="/departments" active={pathname === "/departments"}>
             Departments
           </NavLink>
+          <NavLink href="/shopping-list" active={pathname === "/shopping-list"}>
+            My List{count > 0 ? ` (${count})` : ""}
+          </NavLink>
           <NavLink href="/blog" active={pathname === "/blog"}>
             Blog
           </NavLink>

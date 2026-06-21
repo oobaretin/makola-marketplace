@@ -20,6 +20,9 @@ export const STORE_INFO = {
   /** WhatsApp Chat — prefill: "Hi, is [Product] in stock?" (user replaces [Product]). */
   whatsappCheckStockHref:
     "https://wa.me/17139954343?text=Hi%2C%20is%20%5BProduct%5D%20in%20stock%3F",
+  /** WhatsApp — subscribe to fresh arrivals & kitchen specials. */
+  whatsappUpdatesHref:
+    "https://wa.me/17139954343?text=Hi%2C%20please%20add%20me%20to%20your%20list%20for%20fresh%20arrivals%20and%20kitchen%20specials.",
   hours: [
     { day: "Monday", hours: "9 AM – 9 PM" },
     { day: "Tuesday", hours: "9 AM – 9 PM" },

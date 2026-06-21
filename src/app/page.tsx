@@ -6,6 +6,7 @@ import DailySpecial from "@/components/DailySpecial";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import HowItWorks from "@/components/HowItWorks";
 import { RecipeToListItem } from "@/components/RecipeToListItem";
+import { StoreOpenBadge } from "@/components/StoreOpenBadge";
 import { getBlogPosts } from "@/lib/blog";
 import { categories } from "@/lib/data/products";
 import { STORE_INFO } from "@/lib/store-info";
@@ -34,13 +35,8 @@ export default function HomePage() {
 
       <ArrivedTodayBanner />
 
-      {/* Hero */}
+      {/* Hero — headline first, then photos */}
       <section className="pt-2 pb-8 sm:pt-6 sm:pb-10">
-        {heroSlides.length > 0 && (
-          <div className="mb-8">
-            <HeroCarousel slides={heroSlides} />
-          </div>
-        )}
         <div className="text-center">
         <h1 className="text-4xl font-bold tracking-tight text-stone-950 sm:text-5xl lg:text-6xl">
           Your Houston Home for African Flavors.
@@ -52,6 +48,10 @@ export default function HomePage() {
           In-store only — no delivery. No checkout on this site.
         </p>
 
+        <div className="mt-6 flex justify-center">
+          <StoreOpenBadge />
+        </div>
+
         {/* Action Hub */}
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button href="/departments" variant="primary" size="md" className="min-w-[200px]">
@@ -62,6 +62,12 @@ export default function HomePage() {
           </Button>
         </div>
         </div>
+
+        {heroSlides.length > 0 && (
+          <div className="mt-10">
+            <HeroCarousel slides={heroSlides} />
+          </div>
+        )}
       </section>
 
       {/* How it Works — no-delivery model */}
@@ -142,7 +148,10 @@ export default function HomePage() {
 
       {/* Location / Hours */}
       <section className="border-t border-stone-200 bg-white/80 py-8">
-        <h2 className="text-lg font-semibold text-stone-950">Location & Hours</h2>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="text-lg font-semibold text-stone-950">Location & Hours</h2>
+          <StoreOpenBadge />
+        </div>
         <div className="mt-4 grid gap-6 sm:grid-cols-2">
           <div>
             <p className="text-sm font-medium text-stone-700">

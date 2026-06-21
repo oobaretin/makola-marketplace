@@ -18,6 +18,8 @@ const montserrat = Montserrat({
 
 const isDev = process.env.NODE_ENV === "development";
 
+const OG_IMAGE = "/AF9231CE-E67A-408D-BE83-0F6AAE4253EE_1_105_c.jpeg";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -49,8 +51,22 @@ export const metadata: Metadata = {
     title: "Makola Marketplace - Your Digital Shopping List",
     description:
       "Build your list, then shop for authentic African flavors in Houston.",
-    images: ["/Bold.png"],
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1050,
+        height: 1050,
+        alt: "Makola Marketplace Houston storefront",
+      },
+    ],
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Makola Marketplace | African Grocery Houston, TX",
+    description:
+      "Build your list, then shop for authentic African flavors in Houston.",
+    images: [OG_IMAGE],
   },
 };
 
