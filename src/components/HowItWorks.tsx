@@ -18,9 +18,9 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="bg-white py-12">
+    <section className="bg-white py-8">
       <div className="mx-auto max-w-4xl px-4">
-        <h2 className="mb-8 text-center text-2xl font-black text-stone-900">
+        <h2 className="mb-6 text-center text-2xl font-black text-stone-900">
           Shopping Made Easy
         </h2>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">

@@ -25,8 +25,11 @@ function DepartmentsContent() {
     return CHIP_IDS.includes(chipParam as (typeof CHIP_IDS)[number]) ? chipParam : "all";
   }, [searchParams]);
 
+  const isSearching = search.trim().length > 0;
+
   const selectChip = useCallback(
     (chip: string) => {
+      setSearch("");
       const params = new URLSearchParams(searchParams.toString());
       if (chip === "all") params.delete("c");
       else params.set("c", chip);
@@ -37,11 +40,11 @@ function DepartmentsContent() {
   );
 
   const filteredProducts = useMemo(() => {
-    if (search.trim()) {
+    if (isSearching) {
       return searchProducts(search);
     }
     return getProductsByCategory(activeChip);
-  }, [activeChip, search]);
+  }, [activeChip, isSearching, search]);
 
   const productsByCategory = useMemo(() => {
     const byCat = new Map<string, Product[]>();
@@ -54,7 +57,7 @@ function DepartmentsContent() {
   }, [filteredProducts]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-20">
       <header className="space-y-2">
         <h1 className="text-2xl font-bold tracking-tight text-stone-950 sm:text-3xl">
           Departments
@@ -88,6 +91,11 @@ function DepartmentsContent() {
           className="h-12 w-full rounded-2xl border border-stone-200 bg-white px-4 text-base text-stone-950 placeholder:text-stone-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/60"
           autoComplete="off"
         />
+        {isSearching ? (
+          <p className="mt-2 text-xs font-medium text-stone-500">
+            Searching all departments
+          </p>
+        ) : null}
       </div>
 
       {/* Horizontal scroll chips */}
@@ -99,7 +107,7 @@ function DepartmentsContent() {
             onClick={() => selectChip(c)}
             className={[
               "shrink-0 rounded-full px-4 py-2 text-sm font-medium transition",
-              activeChip === c
+              !isSearching && activeChip === c
                 ? "bg-[var(--forest)] text-white shadow-sm"
                 : "border border-stone-200 bg-white text-stone-700 hover:bg-stone-50",
             ].join(" ")}
@@ -109,7 +117,7 @@ function DepartmentsContent() {
         ))}
       </div>
 
-      {/* Product list by category */}
+      {/* Product grid by category */}
       <div className="space-y-8">
         {categories
           .filter((cat) => productsByCategory.has(cat.id))
@@ -119,12 +127,10 @@ function DepartmentsContent() {
                 <span aria-hidden>{cat.icon}</span>
                 {cat.name}
               </h2>
-              <div className="mt-3 overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
-                <ul className="divide-y divide-stone-200">
-                  {(productsByCategory.get(cat.id) ?? []).map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                  ))}
-                </ul>
+              <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                {(productsByCategory.get(cat.id) ?? []).map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
               </div>
             </section>
           ))}
@@ -146,32 +152,32 @@ function ProductCard({ product }: { product: Product }) {
   const kitchenClosed = isKitchen && !isKitchenOpen();
 
   return (
-    <li className="flex flex-col gap-1 border-b border-stone-200 bg-white p-4 last:border-b-0">
-      <div className="flex min-w-0 flex-1 items-center justify-between gap-4">
-        <div className="min-w-0 flex-1">
-          <h3 className="font-bold text-stone-800">{product.name}</h3>
-          <p className="text-sm text-stone-500">{product.unit}</p>
-        </div>
-        <button
-          type="button"
-          onClick={() => addProduct(product)}
-          disabled={added}
-          className={[
-            "shrink-0 rounded-full px-4 py-2 font-bold transition active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]/70 focus-visible:ring-offset-2",
-            added
-              ? "cursor-default bg-stone-100 text-stone-400"
-              : "bg-[var(--forest)] text-white hover:bg-[var(--forest-light)]",
-          ].join(" ")}
-        >
-          {added ? "Added" : "+ Add"}
-        </button>
+    <div className="flex h-full flex-col rounded-2xl border border-stone-200 bg-white p-4 shadow-sm">
+      <div className="min-w-0 flex-1">
+        <h3 className="text-sm font-bold leading-snug text-stone-800 sm:text-base">
+          {product.name}
+        </h3>
+        <p className="mt-1 text-xs text-stone-500">{product.unit}</p>
       </div>
-      {kitchenClosed && (
-        <p className="text-xs text-amber-700">
-          Kitchen opens at 11:00 AM — Add to list now to pick up later!
+      {kitchenClosed ? (
+        <p className="mt-2 text-xs text-amber-700">
+          Kitchen opens at 11:00 AM
         </p>
-      )}
-    </li>
+      ) : null}
+      <button
+        type="button"
+        onClick={() => addProduct(product)}
+        disabled={added}
+        className={[
+          "mt-3 w-full rounded-xl py-2.5 text-sm font-bold transition active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]/70 focus-visible:ring-offset-2",
+          added
+            ? "cursor-default bg-stone-100 text-stone-400"
+            : "bg-[var(--forest)] text-white hover:bg-[var(--forest-light)]",
+        ].join(" ")}
+      >
+        {added ? "Added" : "+ Add"}
+      </button>
+    </div>
   );
 }
 

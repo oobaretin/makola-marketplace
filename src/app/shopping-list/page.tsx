@@ -38,7 +38,11 @@ function groupRemainingByCategory(
 
 const SECTION_ORDER = [...CATEGORY_ORDER, OTHER_CATEGORY];
 
-const EMPTY_ESSENTIALS = ["Bread", "Milk"];
+const EMPTY_ESSENTIALS = [
+  "Green Plantains",
+  "Red Palm Oil (Zomi)",
+  "Pounded Yam Flour (Iyan)",
+];
 
 function TrashIcon({ className }: { className?: string }) {
   return (
@@ -93,20 +97,12 @@ export default function ShoppingListPage() {
             placeholder="Search for Fufu, Palm Oil, etc..."
             className="gap-2"
           />
-          <div className="mt-3 flex flex-wrap items-center gap-2">
+          <div className="mt-3">
             <ListExportButtons
               items={state.items}
               disabled={state.items.length === 0}
+              onClear={() => clear()}
             />
-            <Button
-              type="button"
-              variant="danger"
-              size="sm"
-              onClick={() => clear()}
-              disabled={state.items.length === 0}
-            >
-              Clear all
-            </Button>
           </div>
           <p className="mt-3 text-xs text-stone-500">
             <strong>Don&apos;t see it?</strong>{" "}
@@ -119,6 +115,16 @@ export default function ShoppingListPage() {
               Ask on WhatsApp
             </a>
           </p>
+          {state.items.length > 0 ? (
+            <a
+              href={STORE_INFO.mapsDirectionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex items-center text-sm font-semibold text-[var(--forest)] hover:underline"
+            >
+              Get directions to store →
+            </a>
+          ) : null}
         </div>
 
         {state.items.length === 0 ? (

@@ -3,7 +3,9 @@ import { Montserrat } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { LocalBusinessSchema } from "@/components/LocalBusinessSchema";
+import { AddToListStickyBar } from "@/components/AddToListStickyBar";
 import { ShoppingListProvider } from "@/lib/shopping-list";
+import { ToastProvider } from "@/lib/toast/ToastContext";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SITE_URL } from "@/lib/site-url";
@@ -115,7 +117,9 @@ export default function RootLayout({
 })();`}</Script>
         ) : null}
         <LocalBusinessSchema />
-        <ShoppingListProvider>
+        <ToastProvider>
+          <ShoppingListProvider>
+            <AddToListStickyBar />
           <a
             className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-zinc-900 focus:shadow-lg"
             href="#content"
@@ -130,6 +134,7 @@ export default function RootLayout({
             <SiteFooter />
           </div>
         </ShoppingListProvider>
+        </ToastProvider>
       </body>
     </html>
   );

@@ -56,7 +56,7 @@ export default function DailySpecial() {
           {added ? "Added" : "+ Add to My List"}
         </button>
         <Link
-          href="/blog/makola-kitchen-food-to-go"
+          href="/departments?c=kitchen"
           className="flex-1 rounded-xl border border-white/40 py-3 text-center font-bold transition hover:bg-white/10"
         >
           Full Menu

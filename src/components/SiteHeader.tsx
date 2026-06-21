@@ -61,7 +61,7 @@ function SiteHeaderInner({ pathname }: { pathname: string }) {
         <Link href="/" className="flex shrink-0 items-center" aria-label="Makola Marketplace – Home">
           <Image
             src="/Bold.png"
-            alt=""
+            alt="Makola Marketplace"
             width={120}
             height={120}
             className="h-16 w-auto sm:h-20"

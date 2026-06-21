@@ -17,11 +17,14 @@ function formatListAsText(items: ShoppingListItem[]): string {
 export function ListExportButtons({
   items,
   disabled,
+  onClear,
 }: {
   items: ShoppingListItem[];
   disabled: boolean;
+  onClear?: () => void;
 }) {
   const [copied, setCopied] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
 
   const handleCopy = async () => {
     const text = formatListAsText(items);
@@ -30,7 +33,7 @@ export function ListExportButtons({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // fallback: do nothing or show toast
+      // fallback: do nothing
     }
   };
 
@@ -39,16 +42,12 @@ export function ListExportButtons({
     const title = `${STORE_INFO.name} — Shopping list`;
     try {
       if (navigator.share) {
-        await navigator.share({
-          title,
-          text,
-        });
+        await navigator.share({ title, text });
         return;
       }
     } catch (e) {
       if ((e as Error).name === "AbortError") return;
     }
-    // Fallback: copy to clipboard
     await handleCopy();
   };
 
@@ -60,33 +59,12 @@ export function ListExportButtons({
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap items-center gap-2">
-        <Button
-          type="button"
-          variant="ghost"
-          onClick={() => window.print()}
-          disabled={disabled}
-        >
-          Print
-        </Button>
-        <Button
-          type="button"
-          variant="ghost"
-          onClick={handleCopy}
-          disabled={disabled}
-          aria-live="polite"
-        >
-          {copied ? "Copied!" : "Copy list"}
-        </Button>
-        <Button
-          type="button"
-          variant="ghost"
-          onClick={handleShare}
-          disabled={disabled}
-        >
-          Share / SMS
-        </Button>
-      </div>
+      {disabled ? (
+        <p className="text-center text-xs text-stone-500">
+          Add items to your list to share via WhatsApp.
+        </p>
+      ) : null}
+
       <button
         type="button"
         onClick={handleShareWhatsApp}
@@ -95,6 +73,59 @@ export function ListExportButtons({
       >
         Share List via WhatsApp
       </button>
+
+      <button
+        type="button"
+        onClick={() => setMoreOpen((v) => !v)}
+        className="text-sm font-medium text-stone-600 underline-offset-2 hover:text-stone-900 hover:underline"
+        aria-expanded={moreOpen}
+      >
+        {moreOpen ? "Hide options" : "More options (Print, Copy, Share)"}
+      </button>
+
+      {moreOpen ? (
+        <div className="flex flex-wrap items-center gap-2 border-t border-stone-100 pt-3">
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => window.print()}
+            disabled={disabled}
+          >
+            Print
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={handleCopy}
+            disabled={disabled}
+            aria-live="polite"
+          >
+            {copied ? "Copied!" : "Copy list"}
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={handleShare}
+            disabled={disabled}
+          >
+            Share / SMS
+          </Button>
+          {onClear ? (
+            <Button
+              type="button"
+              variant="danger"
+              size="sm"
+              onClick={onClear}
+              disabled={disabled}
+            >
+              Clear all
+            </Button>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 }

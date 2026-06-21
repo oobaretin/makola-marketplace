@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useReducer } from "react";
+import { useToast } from "@/lib/toast/ToastContext";
 import { ShoppingListContext } from "@/lib/shopping-list/ShoppingListContext";
 import {
   INITIAL_SHOPPING_LIST_STATE,
@@ -13,6 +14,7 @@ import {
 } from "@/lib/shopping-list/storage";
 
 export function ShoppingListProvider({ children }: { children: React.ReactNode }) {
+  const { showToast } = useToast();
   const [state, dispatch] = useReducer(
     shoppingListReducer,
     INITIAL_SHOPPING_LIST_STATE,
@@ -40,14 +42,30 @@ export function ShoppingListProvider({ children }: { children: React.ReactNode }
     return () => window.removeEventListener("storage", onStorage);
   }, []);
 
-  const addItem = useCallback((name: string) => dispatch({ type: "add", name }), []);
-  const addItems = useCallback((names: string[]) => {
-    names.forEach((name) => dispatch({ type: "add", name }));
-  }, []);
+  const addItem = useCallback(
+    (name: string) => {
+      dispatch({ type: "add", name });
+      showToast(`${name} added to your list`);
+    },
+    [showToast],
+  );
+  const addItems = useCallback(
+    (names: string[]) => {
+      names.forEach((name) => dispatch({ type: "add", name }));
+      showToast(
+        names.length === 1
+          ? `${names[0]} added to your list`
+          : `${names.length} items added to your list`,
+      );
+    },
+    [showToast],
+  );
   const addProduct = useCallback(
-    (product: { id: string; category: string; name: string; unit: string }) =>
-      dispatch({ type: "addProduct", product }),
-    [],
+    (product: { id: string; category: string; name: string; unit: string }) => {
+      dispatch({ type: "addProduct", product });
+      showToast(`${product.name} added to your list`);
+    },
+    [showToast],
   );
   const isInList = useCallback(
     (productId: string) =>
